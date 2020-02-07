@@ -1,6 +1,6 @@
 #Phase 4 - Seal 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/JamesKindon/Citrix/master/Image%20Build/Get-InstalledSoftware.ps1'))
+Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/Get-InstalledSoftware.ps1'))
 
 Write-Host \"====== Enable Windows Defender real time scan\"
 Set-MpPreference -DisableRealtimeMonitoring $false

@@ -105,7 +105,7 @@ Function Install-CoreApps {
     #endregion
 
     #region Default Apps & File Type Associations
-    $url = "https://raw.githubusercontent.com/JamesKindon/Citrix/master/Image%20Build/Default%20File%20Assocs/FileTypeAssociations%20(Edge).xml"
+    $url = "https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/Default%20File%20Assocs/FileTypeAssociations%20(Edge).xml"
     $output = "$Target\$(Split-Path -Path $url -Leaf)"
     Invoke-WebRequest -Uri $url -OutFile $output -UseBasicParsing
     Invoke-Process -FilePath "$env:SystemRoot\System32\dism.exe" -ArgumentList "/Online /Import-DefaultAppAssociations:$output" -Verbose
