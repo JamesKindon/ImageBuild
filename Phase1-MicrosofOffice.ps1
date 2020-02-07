@@ -113,13 +113,13 @@ Function Install-CoreApps {
     # Get the Office configuration.xml
     Switch -Regex ((Get-WmiObject Win32_OperatingSystem).Caption) {
         "Microsoft Windows Server*" {
-            $url = "https://raw.githubusercontent.com/JamesKindon/Citrix/master/Image%20Build/Office%20Configs/Office365ProPlusRDS.xml"
+            $url = "https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/Office%20Configs/Office365ProPlusRDS.xml"
         }
         "Microsoft Windows 10 Enterprise for Virtual Desktops" {
-            $url = "https://raw.githubusercontent.com/JamesKindon/Citrix/master/Image%20Build/Office%20Configs/Office365ProPlusRDS.xml"
+            $url = "https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/Office%20Configs/Office365ProPlusRDS.xml"
         }
         "Microsoft Windows 10*" {
-            $url = "https://raw.githubusercontent.com/JamesKindon/Citrix/master/Image%20Build/Office%20Configs/Office365ProPlusRDS.xml"
+            $url = "https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/Office%20Configs/Office365ProPlusRDS.xml"
         }
     }
     Write-Host "=========== Downloading to: $Dest\$(Split-Path -Path $url -Leaf)"
