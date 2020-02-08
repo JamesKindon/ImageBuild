@@ -16,6 +16,10 @@ $CitrixPassword = $env:citrixpassword
 
 Write-Host $CitrixUserName
 
+if (!(Test-Path -Path "C:\Apps")) {
+	New-Item -Path "C:\Apps" -ItemType Directory | Out-Null
+}
+
 #JK____$downloadpath = "$($env:SystemRoot)\temp\$($env:vda)"
 $downloadpath = "C:\Apps\VDAServerSetup_1912.exe"
 Write-Host $downloadpath
