@@ -2,6 +2,10 @@
 
 
 #---------Citrix Optimizer
+Write-Host "=============== Downloading Citrix Optimizer"
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/CitrixOptimizer.zip" -OutFile "C:\Tools\CitrixOptimizer.Zip" -UseBasicParsing
+Expand-Archive -Path "C:\Tools\CitrixOptimizer.Zip" -DestinationPath "C:\Tools\CitrixOptimizer"
+
 Set-ExecutionPolicy Bypass -Force
 & "C:\Tools\CitrixOptimizer\CtxOptimizerEngine.ps1" -mode Execute
 #Use 3rd Party Optimizations
