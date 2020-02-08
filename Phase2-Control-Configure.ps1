@@ -2,11 +2,10 @@
 
 Write-Host "====== Configuring Start Layouts\"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/CreateShortcuts.ps1'))
 if (!(Test-Path -Path "C:\Tools")) {
 	New-Item -Path "C:\Tools" -ItemType Directory | Out-Null
 }
-
+Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/CreateShortcuts.ps1'))
 Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/CustomLayout-2019-Basic-Office-x64.xml' -outfile 'c:\Tools\CustomLayout-2019-Basic-Office-x64.xml'
 Import-StartLayout -LayoutPath 'c:\Tools\CustomLayout-2019-Basic-Office-x64.xml' -MountPath 'c:\' -Verbose
 
