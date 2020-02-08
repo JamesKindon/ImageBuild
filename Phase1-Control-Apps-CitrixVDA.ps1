@@ -1,5 +1,5 @@
 
-#Downloads Citrix CVAD 1906 Server VDA
+#Downloads Citrix CVAD 1912 Server VDA
 #Can be used as part of a pipeline or MDT task sequence.
 #Ryan Butler TechDrabble.com @ryan_c_butler 07/19/2019
 
@@ -70,3 +70,13 @@ $webform = @{
 
 #Download
 Invoke-WebRequest -Uri ($vdaurl) -WebSession $websession -Method POST -Body $webform -ContentType "application/x-www-form-urlencoded" -OutFile $downloadpath -Verbose -UseBasicParsing
+
+
+Switch -Regex ((Get-WmiObject Win32_OperatingSystem).Caption) {
+    "Microsoft Windows Server*" {
+    }
+    "Microsoft Windows 10 Enterprise for Virtual Desktops" {
+    }
+    "Microsoft Windows 10*" {
+    }
+}

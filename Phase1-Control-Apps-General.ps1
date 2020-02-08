@@ -36,6 +36,14 @@ Write-Host "====== Install Microsoft OneDrive\"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/Phase1-MicrosoftOneDrive.ps1'))
 
-#---------OldCalc
-#Start-Process -FilePath "\\\Citrix\oldcalcwin10\Old Calculator for Windows 10.exe" -Wait -PassThru
+Switch -Regex ((Get-WmiObject Win32_OperatingSystem).Caption) {
+    "Microsoft Windows Server*" {
+    }
+    "Microsoft Windows 10 Enterprise for Virtual Desktops" {
+    }
+    "Microsoft Windows 10*" {
+        #---------OldCalc
+        #Start-Process -FilePath "\\\Citrix\oldcalcwin10\Old Calculator for Windows 10.exe" -Wait -PassThru
+    }
+}
 
