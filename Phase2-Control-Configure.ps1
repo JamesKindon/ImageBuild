@@ -1,4 +1,5 @@
 #Phase 2 - Configure
+
 Write-Host "====== Configuring Start Layouts\"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/CreateShortcuts.ps1'))
@@ -13,10 +14,10 @@ Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/JamesKindon/Citrix/mas
 Write-Host "====== Configuring Default File Assocs\"
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/Phase2-DefaultFileAssocs.ps1'))
 
-#---------PhotoViewer
-#Photoviewer Restore
-#Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/Restore_Windows_Photo_Viewer.reg" -UseBasicParsing -OutFile "C:\Tools\Restore_Windows_Photo_Viewer.reg"
-#Start-process -FilePath regsvr32.exe -ArgumentList '"C:\Program Files (x86)\Windows Photo Viewer\PhotoViewer.dll"' -PassThru
-#Invoke-Command {reg import "c:\Tools\Restore_Windows_Photo_Viewer.reg"}
-#---------Desktop Shortcuts
+Write-Host "====== Restoring PhotoViewer\"
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/Restore_Windows_Photo_Viewer.reg" -UseBasicParsing -OutFile "C:\Tools\Restore_Windows_Photo_Viewer.reg"
+Start-process -FilePath regsvr32.exe -ArgumentList '"C:\Program Files (x86)\Windows Photo Viewer\PhotoViewer.dll"' -PassThru
+Invoke-Command {reg import "C:\Tools\Restore_Windows_Photo_Viewer.reg"}
 
+Write-Host "====== Deleting Public Desktop Shortcuts\"
+Remove-Item -Path "$Env:SystemDrive\Users\Public\Desktop\*" -Force -WhatIf

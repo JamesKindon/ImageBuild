@@ -17,7 +17,7 @@ choco install bis-f -Y
 
 Write-Host "====== Install Microsoft Edge\"
 choco install microsoft-edge -Y
-#---------Preferences
+Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/Edge%20(Chromium)/master_preferences' -OutFile "${Env:ProgramFiles(x86)}\Microsoft\Edge\Application\Master_preferences" -UseBasicParsing
 
 Write-Host "====== Install Google Chrome Enterprise\"
 choco install googlechrome -Y
