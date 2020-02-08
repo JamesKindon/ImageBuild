@@ -42,8 +42,8 @@ Switch -Regex ((Get-WmiObject Win32_OperatingSystem).Caption) {
     "Microsoft Windows 10 Enterprise for Virtual Desktops" {
     }
     "Microsoft Windows 10*" {
-        #---------OldCalc
-        #Start-Process -FilePath "\\\Citrix\oldcalcwin10\Old Calculator for Windows 10.exe" -Wait -PassThru
+        Write-Host "====== Install OldCalc\"
+        choco install oldcalc -Y
     }
 }
 
