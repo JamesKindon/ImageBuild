@@ -20,4 +20,4 @@ Start-process -FilePath regsvr32.exe -ArgumentList '"C:\Program Files (x86)\Wind
 Invoke-Command {reg import "C:\Tools\Restore_Windows_Photo_Viewer.reg"}
 
 Write-Host "====== Deleting Public Desktop Shortcuts\"
-Remove-Item -Path "$Env:SystemDrive\Users\Public\Desktop\*" -Force -WhatIf
+Remove-Item -Path "$Env:SystemDrive\Users\Public\Desktop\*" -Force
