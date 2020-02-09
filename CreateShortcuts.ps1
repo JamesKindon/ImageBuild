@@ -39,7 +39,7 @@ function Set-Shortcut {
     [System.Runtime.Interopservices.Marshal]::ReleaseComObject($shell) | Out-Null
 }
 
-$ShortcutHome = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\"
+$ShortcutHome = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs"
 
 Set-Shortcut -Lnk "$ShortcutHome\Word.lnk" -DestinationPath "C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE" -IconLocation $DestinationPath -IconIndex 0
 Set-Shortcut -Lnk "$ShortcutHome\Excel.lnk" -DestinationPath "C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE" -IconLocation $DestinationPath -IconIndex 0
