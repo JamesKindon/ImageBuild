@@ -26,8 +26,7 @@ function InstallVDA {
 		New-Item -Path $LogsDir -Force | Out-Null
 	}
 	$UnattendedArgs = '/quiet /components vda,plugin /enable_remote_assistance /enable_hdx_ports /enable_real_time_transport /virtualmachine /noreboot /noresume /logpath $LogsDir /masterimage /install_mcsio_driver /exclude "Personal vDisk","Citrix Files for Windows","Citrix Files for Outlook"'
-	Write-Host "Starting Install of VDA: $Outfile with arguments $UnattendedArgs"
-	#$exit = (Start-Process ($Outfile) $UnattendedArgs -Wait -Verbose -Passthru).ExitCode
+	$exit = (Start-Process ($Outfile) $UnattendedArgs -Wait -Verbose -Passthru).ExitCode
 
 	if ($exit -eq 0) {
 		Write-Host "VDA INSTALL COMPLETED!"
