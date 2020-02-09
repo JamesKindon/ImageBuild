@@ -1,36 +1,27 @@
-
-#Downloads and Install Citrix CVAD VDA
+#Downloads Citrix WEM (not Cloud Service)
 #Can be used as part of a pipeline or MDT task sequence.
-#Ryan Butler TechDrabble.com @ryan_c_butler 07/19/2019
-#Updated by James Kindon
 
-# Download URL for the appropriate VDA
-$ServerVDAURL = "https://secureportal.citrix.com/Licensing/Downloads/UnrestrictedDL.aspx?DLID=16837&URL=https://downloads.citrix.com/16837/VDAServerSetup_1912.exe"
-$DesktopVDAURL = "https://secureportal.citrix.com/Licensing/Downloads/UnrestrictedDL.aspx?DLID=16838&URL=https://downloads.citrix.com/16838/VDAWorkstationSetup_1912.exe"
+
+# Download URL for the appropriate Package
+$Application = "Citrix Workspace Environment Management"
+$DLURL = "https://secureportal.citrix.com/Licensing/Downloads/UnrestrictedDL.aspx?DLID=16911&URL=https://downloads.citrix.com/16911/Workspace-Environment-Management-v-1912-01-00-01.zip"
 $DownloadFolder = "C:\Apps"
+$InstallArgs = "/install /quiet Cloud=0"
+$InstallerType = "exe" #MSI or EXE
+$InstallerName = "Citrix Workspace Environment Management Agent Setup.exe"
 
-function CheckandDownloadVDA {
-	if (Test-Path $Outfile) {
-		Write-Host "$Outfile exists, proceeding with install"
-		InstallVDA
-	}
- else {
-		DownloadVDA
-		InstallVDA
-	}
+function CheckandDownload {
+    if (Test-Path $Outfile) {
+        Write-Host "$Outfile exists, proceeding with install"
+        Install
+    }
+    else {
+        Download
+        Install
+    }
 }
 
-function InstallVDA {
-	Set-MpPreference -DisableRealtimeMonitoring $True 
-	$LogsDir = "C:\Windows\Temp\VDA"
-	if (!(Test-Path $LogsDir )) {
-		New-Item -Path $LogsDir -ItemType Directory -Force | Out-Null
-	}
-	$UnattendedArgs = "/quiet /components vda,plugins /enable_remote_assistance /enable_hdx_ports /enable_real_time_transport /virtualmachine /noreboot /noresume /logpath $LogsDir /masterimage /install_mcsio_driver"
-	(Start-Process ($Outfile) $UnattendedArgs -Wait -Verbose -Passthru).ExitCode
-}
-
-function DownloadVDA {
+function Download {
 	#Uncomment to use plain text or env variables
 	$CitrixUserName = $env:citrixusername
 	$CitrixPassword = $env:citrixpassword
@@ -105,29 +96,28 @@ function DownloadVDA {
 
 	#Download
 	Write-Host "Downloading VDA...Please Wait...." -ForegroundColor Cyan
-	Invoke-WebRequest -Uri ($vdaurl) -WebSession $websession -Method POST -Body $webform -ContentType "application/x-www-form-urlencoded" -OutFile $Outfile -Verbose -UseBasicParsing
+	Invoke-WebRequest -Uri ($DLURL) -WebSession $websession -Method POST -Body $webform -ContentType "application/x-www-form-urlencoded" -OutFile $Outfile -Verbose -UseBasicParsing
 }
 
-# Desktop or Server Switch
-Switch -Regex ((Get-WmiObject Win32_OperatingSystem).Caption) {
-	"Microsoft Windows Server*" {
-		Write-Host "Setting Multi-session OS Virtual Delivery Agent" -ForegroundColor Cyan
-		$DLURL = $ServerVDAURL
-	}
-	"Microsoft Windows 10 Enterprise for Virtual Desktops" {
-		Write-Host "Setting Multi-session OS Virtual Delivery Agent" -ForegroundColor Cyan
-		$DLURL = $ServerVDAURL
-	}
-	"Microsoft Windows 10*" {
-		Write-Host "Setting Single-session OS Virtual Delivery Agent" -ForegroundColor Cyan
-		$DLURL = $DesktopVDAURL
-	}
+function Install {
+    $File = $DLURL | Split-Path -Leaf
+    if ($File -like "*.zip") {
+        Write-Host "Extracting Archive to $DownloadFolder\$Application" -ForegroundColor Cyan
+        New-Item -Path "$DownloadFolder\$Application" -ItemType Directory -Force | Out-Null
+        Expand-Archive -Path $Outfile -DestinationPath $DownloadFolder\$Application -Force -Verbose
+        $OutFile = $DownloadFolder + "\" + $Application + "\" + $InstallerName
+    }
+    if ($InstallerType -eq "exe") {
+        Write-host "Installing $Application" -ForegroundColor Cyan
+        Start-Process $Outfile -ArgumentList $InstallArgs -wait -PassThru
+    }
+    if ($InstallerType -eq "msi") {
+        Write-host "Installing $Application" -ForegroundColor Cyan
+        Start-Process "msiexec" -ArgumentList "/i $Outfile $InstallArgs" -Wait -PassThru
+    }
 }
 
 $Outfile = $DownloadFolder + "\" + ($DLURL | Split-Path -Leaf)
 
 #Execute
-CheckandDownloadVDA
-
-
-
+CheckandDownload
