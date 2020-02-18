@@ -96,6 +96,7 @@ function Download {
 
 	#Download
 	Write-Host "Downloading VDA...Please Wait...." -ForegroundColor Cyan
+	$ProgressPreference = "SilentlyContinue"
 	Invoke-WebRequest -Uri ($DLURL) -WebSession $websession -Method POST -Body $webform -ContentType "application/x-www-form-urlencoded" -OutFile $Outfile -Verbose -UseBasicParsing
 }
 

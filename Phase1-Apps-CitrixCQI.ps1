@@ -91,6 +91,7 @@ public class SSLHandler
     Invoke-WebRequest -Uri ("https://identity.citrix.com/Utility/STS/Sign-In") -WebSession $websession -Method POST -Body $form -ContentType "application/x-www-form-urlencoded" -Verbose -UseBasicParsing
 
     #Download File
+    $ProgressPreference = "SilentlyContinue"
     Invoke-WebRequest -WebSession $websession -Uri $DLURL -OutFile $Outfile -Verbose -UseBasicParsing
 }
 

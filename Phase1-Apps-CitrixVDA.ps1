@@ -81,7 +81,7 @@ function DownloadVDA {
 	[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 	[System.Net.ServicePointManager]::ServerCertificateValidationCallback = [SSLHandler]::GetSSLHandler()
 
-	#Initialize Session 
+	#Initialize Session
 	Invoke-WebRequest "https://identity.citrix.com/Utility/STS/Sign-In?ReturnUrl=%2fUtility%2fSTS%2fsaml20%2fpost-binding-response" -SessionVariable websession -Verbose -UseBasicParsing | Out-Null
 
 	#Set Form
@@ -105,6 +105,7 @@ function DownloadVDA {
 
 	#Download
 	Write-Host "Downloading VDA...Please Wait...." -ForegroundColor Cyan
+	$ProgressPreference = "SilentlyContinue"
 	Invoke-WebRequest -Uri ($DLURL) -WebSession $websession -Method POST -Body $webform -ContentType "application/x-www-form-urlencoded" -OutFile $Outfile -Verbose -UseBasicParsing
 }
 
