@@ -28,9 +28,9 @@ choco install adobereader -Y
 Write-Host "====== Install Microsoft Teams\"
 choco install microsoft-teams.install -Y
 
-Write-Host "====== Install Microsoft Office 365 ProPlus\"
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/Phase1-MicrosofOffice.ps1'))
+#Write-Host "====== Install Microsoft Office 365 ProPlus\"
+#[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+#Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/Phase1-MicrosofOffice.ps1'))
 
 Write-Host "====== Install Microsoft OneDrive\"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
