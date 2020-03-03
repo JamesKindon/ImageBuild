@@ -34,7 +34,7 @@ Write-Host "Running: $($MyInvocation.MyCommand)."
 Start-Transcript -Path $Log -Append
 
 # If local path for script doesn't exist, create it
-If (!(Test-Path $Target)) { New-Item -Path $Target -ItemType Directory -Force -ErrorAction SilentlyContinue }
+If (!(Test-Path $Target)) { New-Item -Path $Target -ItemType Directory -Force -ErrorAction SilentlyContinue | Out-Null }
 
 # Run tasks
 Set-Roles
