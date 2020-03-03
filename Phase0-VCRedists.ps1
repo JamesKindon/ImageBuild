@@ -5,7 +5,7 @@
 [CmdletBinding()]
 Param (
     [Parameter(Mandatory = $False)]
-    [System.String] $Log = "$env:SystemRoot\Logs\AzureArmCustomDeploy.log",
+    [System.String] $Log = "$env:SystemRoot\Logs\CustomDeploy.log",
 
     [Parameter(Mandatory = $False)]
     [System.String] $Target = "$env:SystemDrive\Apps"
@@ -128,7 +128,7 @@ Write-Host "=========== Running: $($MyInvocation.MyCommand)."
 Start-Transcript -Path $Log -Append
 
 # If local path for script doesn't exist, create it
-If (!(Test-Path $Target)) { New-Item -Path $Target -ItemType Directory -Force -ErrorAction SilentlyContinue }
+If (!(Test-Path $Target)) { New-Item -Path $Target -ItemType Directory -Force -ErrorAction SilentlyContinue | Out-Null }
 
 # Run tasks
 Set-Repository
