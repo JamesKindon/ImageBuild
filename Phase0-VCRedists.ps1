@@ -101,10 +101,10 @@ Function Install-CoreApps {
     Write-Host "=========== Installing required modules"
     # Install the Evergreen module
     # https://github.com/aaronparker/Evergreen
-    Install-Module -Name Evergreen -AllowClobber
+    Install-Module -Name Evergreen -AllowClobber -Force
     # Install the VcRedist module
     # https://docs.stealthpuppy.com/vcredist/
-    Install-Module -Name VcRedist -AllowClobber
+    Install-Module -Name VcRedist -AllowClobber -Force
     #endregion
 
 
