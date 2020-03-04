@@ -21,7 +21,7 @@ function CheckandDownloadVDA {
 }
 
 function InstallVDA {
-	Set-MpPreference -DisableRealtimeMonitoring $True 
+	Set-MpPreference -DisableRealtimeMonitoring $True -ErrorAction SilentlyContinue
 	$LogsDir = "C:\Windows\Temp\VDA"
 	if (!(Test-Path $LogsDir )) {
 		New-Item -Path $LogsDir -ItemType Directory -Force | Out-Null
