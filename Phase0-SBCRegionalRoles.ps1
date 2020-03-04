@@ -29,7 +29,7 @@ Function Set-Roles {
     Switch -Regex ((Get-WmiObject Win32_OperatingSystem).Caption) {
         "Microsoft Windows Server*" {
             # Add / Remove roles (requires reboot at end of deployment)
-            Add-WindowsFeature -Name RDS-RD-Server, Server-Media-Foundation, 'Search-Service', NET-Framework-Core
+            Add-WindowsFeature -Name 'RDS-RD-Server', 'Server-Media-Foundation', 'Search-Service', 'NET-Framework-Core', 'Remote-Assistance'
 
             # Configure services
             Set-Service Audiosrv -StartupType Automatic
