@@ -11,7 +11,7 @@ Design to run on top of a deployed VM with nothing else on it
 Triggers the download of the latest release VDA (Currently 1912)
 
 .PARAMETER CitrixWEM
-Triggers the download of the latest release WEM Agent (Currently 1912)\
+Triggers the download of the latest release WEM Agent (Currently 1912)
 
 .PARAMETER ControlFileLocation
 Default Control File Location is C:\temp\ImageBuild. Writes Control Files for tracking
