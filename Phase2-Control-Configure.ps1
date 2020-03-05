@@ -18,7 +18,7 @@ Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw
 
 Write-Host "====== Restoring PhotoViewer\"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/Restore_Windows_Photo_Viewer.reg" -UseBasicParsing -OutFile "C:\Tools\Restore_Windows_Photo_Viewer.reg"
-Start-process -FilePath regsvr32.exe -ArgumentList '"C:\Program Files (x86)\Windows Photo Viewer\PhotoViewer.dll"' -PassThru
+Start-process -FilePath regsvr32.exe -ArgumentList '"C:\Program Files (x86)\Windows Photo Viewer\PhotoViewer.dll" /s' -PassThru
 Invoke-Command {reg import "C:\Tools\Restore_Windows_Photo_Viewer.reg"}
 
 Write-Host "====== Deleting Public Desktop Shortcuts\"
