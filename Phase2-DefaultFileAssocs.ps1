@@ -5,7 +5,7 @@
 [CmdletBinding()]
 Param (
     [Parameter(Mandatory = $False)]
-    [System.String] $Log = "$env:SystemRoot\Logs\AzureArmCustomDeploy.log",
+    [System.String] $Log = "$env:SystemRoot\Logs\CustomDeploy.log",
 
     [Parameter(Mandatory = $False)]
     [System.String] $Target = "$env:SystemDrive\Apps"

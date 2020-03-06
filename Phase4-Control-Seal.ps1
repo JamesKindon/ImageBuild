@@ -2,10 +2,10 @@
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/Get-InstalledSoftware.ps1'))
 
-Write-Host \"====== Enable Windows Defender real time scan\"
-Set-MpPreference -DisableRealtimeMonitoring $false
+Write-Host "====== Enable Windows Defender real time scan\"
+Set-MpPreference -DisableRealtimeMonitoring $false -ErrorAction SilentlyContinue
 
-Write-Host \"====== Sysprep\"
+Write-Host "====== Sysprep\"
 & $env:SystemRoot\System32\Sysprep\Sysprep.exe /oobe /generalize /quiet /quit
 while ($true) { 
     $imageState = Get-ItemProperty HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Setup\State | Select-Object ImageState
