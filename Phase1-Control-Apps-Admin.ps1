@@ -1,5 +1,4 @@
-#Phase 1 - Apps
-
+#Phase 1 - Admin Apps
 $SfrHook = "HKLM:\SOFTWARE\Citrix\CtxHook\AppInit_DLLs\SfrHook\"
 $WarningFile = "C:\Apps\WarningFile.txt"
 
@@ -22,7 +21,6 @@ function SetSfrHook {
 #Install Chocolatey
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
-
 Write-Host "====== Install 7zip\"
 choco install 7zip.install -Y
 
@@ -33,7 +31,6 @@ Write-Host "====== Install VLC\"
 choco install vlc -Y
 
 Write-Host "====== Install FSLogix Components\"
-choco install fslogix -Y
 choco install fslogix-rule -Y
 
 Write-Host "====== Install BIS-F\"
@@ -49,27 +46,33 @@ choco install googlechrome -Y
 Write-Host "====== Install Adobe Reader DC\"
 choco install adobereader -Y
 
-Write-Host "====== Install Microsoft Teams\"
-choco install microsoft-teams.install -Y
-
 Write-Host "====== Install Microsoft Autoruns\"
 choco install autoruns -Y
 
-#Write-Host "====== Install Microsoft Office 365 ProPlus\"
-#[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-#Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/Phase1-MicrosofOffice.ps1'))
+Write-Host "====== Install Microsoft Visual Studio Code\"
+choco install vscode -Y 
+choco install vscode-powershell
 
-Write-Host "====== Install Microsoft OneDrive\"
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/Phase1-MicrosoftOneDrive.ps1'))
+Write-Host "====== Install Putty\"
+choco install Putty -Y
+
+Write-Host "====== Install Remote Desktop Manager Free Edition\"
+choco install rdmfree -Y
+
+Write-Host "====== Install WinSCP\"
+choco install winscp -Y
+
+Write-Host "====== Install KeePass\"
+choco install keepass -Y
 
 Switch -Regex ((Get-WmiObject Win32_OperatingSystem).Caption) {
     "Microsoft Windows Server*" {
         Write-Host "====== Install Microsoft Autologon\"
         choco install autologon -Y
-
+        
         # Set Reg Key to bypass ICA Hooks https://support.citrix.com/article/CTX265011
         SetSfrHook -ProcessName "msedge.exe"
+        SetSfrHook -ProcessName "code.exe"
 
     }
     "Microsoft Windows 10 Enterprise for Virtual Desktops" {
