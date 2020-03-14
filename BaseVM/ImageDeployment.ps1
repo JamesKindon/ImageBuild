@@ -25,6 +25,9 @@ Triggers the General Build Components of the image - Features and Roles
 .PARAMETER GeneralApps
 Triggers the download and installations of basic applications
 
+.PARAMETER AdminApps
+Triggers the download and installations of Admin applications for an Admin Image
+
 .PARAMETER ConfigureAndOptimise
 Triggers the download and execution of the configuration and optimization components
 
@@ -77,6 +80,9 @@ Param(
     [switch]$GeneralApps,
 
     [Parameter(Mandatory = $false)]
+    [switch]$AdminApps,
+
+    [Parameter(Mandatory = $false)]
     [switch]$ConfigureAndOptimise,
 
     [Parameter(Mandatory = $false)]
@@ -87,6 +93,7 @@ Param(
 
     [Parameter(Mandatory=$False,ValueFromPipeline=$true)] [ValidateSet('Phase0-Control-Build',
     'Phase1-Control-Apps-General',
+    'Phase1-Control-Apps-Admin',
     'Phase1-Control-Apps-MicrosoftOffice365',
     'Phase1-Apps-CitrixVDA-FirstPass',
     'Phase1-Apps-CitrixVDA-SecondPass',
@@ -167,6 +174,8 @@ function ResetPhase {
                 ResetPhaseControlFile -PhaseName $PhaseName
             } 'Phase1-Control-Apps-General' {
                 ResetPhaseControlFile -PhaseName $PhaseName
+            } 'Phase1-Control-Apps-Admin' {
+                ResetPhaseControlFile -PhaseName $PhaseName
             } 'Phase1-Control-Apps-MicrosoftOffice365' {
                 ResetPhaseControlFile -PhaseName $PhaseName
             } 'Phase1-Apps-CitrixVDA-FirstPass' {
@@ -212,6 +221,12 @@ if ($GeneralBuild.IsPresent) {
 if ($GeneralApps.IsPresent) {
     $PhaseName = "Phase1-Control-Apps-General"
     $Script = "https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/Phase1-Control-Apps-General.ps1"
+    ExecutePhase -PhaseName $PhaseName
+}
+
+if ($AdminApps.IsPresent) {
+    $PhaseName = "Phase1-Control-Apps-Admin"
+    $Script = "https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/Phase1-Control-Apps-Admin.ps1"
     ExecutePhase -PhaseName $PhaseName
 }
 
