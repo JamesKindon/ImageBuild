@@ -3,10 +3,6 @@
 #Can be used as part of a pipeline or MDT task sequence.
 #Ryan Butler TechDrabble.com @ryan_c_butler 07/19/2019
 #Updated by James Kindon
-#Param(
-#	[Parameter(Mandatory=$False,ValueFromPipeline=$true)] [ValidateSet('CR',
-#    'LTSR')] [Array] $ReleaseVersion
-#)
 
 # Download URL for the appropriate VDA
 #LTSR 1912
@@ -153,13 +149,6 @@ Switch -Regex ((Get-WmiObject Win32_OperatingSystem).Caption) {
 $Outfile = $DownloadFolder + "\" + ($DLURL | Split-Path -Leaf)
 
 #Execute
-
-#if ($ReleaseVersion -eq "LTSR") {
-#	$env:CitrixReleaseVersion = "LTSR"
-#}
-#if ($ReleaseVersion -eq "CR") {
-#	$env:CitrixReleaseVersion = "CR"
-#}
 
 CheckandDownloadVDA
 
