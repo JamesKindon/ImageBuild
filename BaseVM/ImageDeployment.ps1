@@ -208,9 +208,9 @@ if (!(Test-Path -Path $ControlFileLocation)) {
 
 if ($ClearVariable.IsPresent) {
     Write-Host "Removing Variables" -ForegroundColor Cyan
-    ClearVariable -Variable citrixusername
-    ClearVariable -Variable citrixpassword
-    ClearVariable -Variable CitrixReleaseVersion
+    Clear-Variable -variable citrixusername
+    Clear-Variable -variable citrixpassword
+    Clear-Variable -variable CitrixReleaseVersion
 }
 
 if ($GeneralBuild.IsPresent) {
