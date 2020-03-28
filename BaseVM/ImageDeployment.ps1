@@ -208,9 +208,9 @@ if (!(Test-Path -Path $ControlFileLocation)) {
 
 if ($ClearVariable.IsPresent) {
     Write-Host "Removing Variables" -ForegroundColor Cyan
-    Clear-Variable -variable citrixusername
-    Clear-Variable -variable citrixpassword
-    Clear-Variable -variable ReleaseVersion
+    ClearVariable -variable citrixusername
+    ClearVariable -variable citrixpassword
+    ClearVariable -variable ReleaseVersion
 }
 
 if ($GeneralBuild.IsPresent) {
@@ -317,7 +317,9 @@ if ($CleanupAfterBuild.IsPresent) {
     Write-Host "Cleaning all Software and Control Files" -ForegroundColor Cyan
     Remove-Item -Path $ControlFileLocation -Recurse -Force -ErrorAction SilentlyContinue | Out-Null
     Remove-Item -Path "C:\Apps" -Recurse -Force -ErrorAction SilentlyContinue | Out-Null
-    ClearVariable
+    ClearVariable -Variable citrixusername
+    ClearVariable -Variable citrixpassword
+    ClearVariable -Variable ReleaseVersion      
 }
 
 # Reset phases as specified
