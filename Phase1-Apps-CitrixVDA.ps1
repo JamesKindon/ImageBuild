@@ -40,15 +40,6 @@ function DownloadVDA {
 	#Uncomment to use plain text or env variables
 	$CitrixUserName = $env:citrixusername
 	$CitrixPassword = $env:citrixpassword
-	$ReleaseVersion = $env:CitrixReleaseVersion
-	if ($releaseversion -eq "LTSR") {
-		$ServerVDAURL = $ServerVDAURL_LTSR
-		$DesktopVDAURL = $DesktopVDAURL_LTSR
-	}
-	if ($releaseversion -eq "CR") {
-		$ServerVDAURL = $ServerVDAURL_CR
-		$DesktopVDAURL = $DesktopVDAURL_CR
-	}
 
 	#Uncomment to use credential object
 	#$creds = get-credential
@@ -128,6 +119,17 @@ function DownloadVDA {
 	Write-Host "Downloading VDA...Please Wait...." -ForegroundColor Cyan
 	$ProgressPreference = "SilentlyContinue"
 	Invoke-WebRequest -Uri ($DLURL) -WebSession $websession -Method POST -Body $webform -ContentType "application/x-www-form-urlencoded" -OutFile $Outfile -Verbose -UseBasicParsing
+}
+
+# Check for Version and Set URL
+$ReleaseVersion = $env:CitrixReleaseVersion
+if ($ReleaseVersion -eq "LTSR") {
+	$ServerVDAURL = $ServerVDAURL_LTSR
+	$DesktopVDAURL = $DesktopVDAURL_LTSR
+}
+if ($ReleaseVersion -eq "CR") {
+	$ServerVDAURL = $ServerVDAURL_CR
+	$DesktopVDAURL = $DesktopVDAURL_CR
 }
 
 # Desktop or Server Switch
