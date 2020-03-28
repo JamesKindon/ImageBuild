@@ -3,10 +3,10 @@
 #Can be used as part of a pipeline or MDT task sequence.
 #Ryan Butler TechDrabble.com @ryan_c_butler 07/19/2019
 #Updated by James Kindon
-Param(
-	[Parameter(Mandatory=$False,ValueFromPipeline=$true)] [ValidateSet('CR',
-    'LTSR')] [Array] $ReleaseVersion
-)
+#Param(
+#	[Parameter(Mandatory=$False,ValueFromPipeline=$true)] [ValidateSet('CR',
+#    'LTSR')] [Array] $ReleaseVersion
+#)
 
 # Download URL for the appropriate VDA
 #LTSR 1912

@@ -210,6 +210,7 @@ if ($ClearVariable.IsPresent) {
     Write-Host "Removing Variables" -ForegroundColor Cyan
     ClearVariable -Variable citrixusername
     ClearVariable -Variable citrixpassword
+    ClearVariable -Variable CitrixReleaseVersion
 }
 
 if ($GeneralBuild.IsPresent) {
@@ -253,11 +254,12 @@ if ($CitrixVDA.IsPresent) {
             Write-Host "Citrix Username is $env:citrixusername" -ForegroundColor Cyan
             Write-Host "Citrix Password has been set" -ForegroundColor Cyan
         }
-        if (!(Test-Path env:CitrixReleaseRersion)) {
-            $env:CitrixReleaseRersion = Read-Host "Please Select Citrix Release Version: CR or LTSR"
+        if (!(Test-Path env:CitrixReleaseVersion)) {
+            $env:CitrixReleaseVersion = Read-Host "Please Select Citrix Release Version: CR or LTSR"
+            Write-Host "Citrix Release Version has been set to $env:CitrixReleaseVersion" -ForegroundColor Cyan
         }
         else {
-            Write-Host "Citrix Release Version has been set" -ForegroundColor Cyan
+            Write-Host "Citrix Release Version has been set to $env:CitrixReleaseVersion" -ForegroundColor Cyan
         }
         ExecutePhase -PhaseName $PhaseName
         RestartComputer
