@@ -44,7 +44,7 @@ function DownloadVDA {
 	#Uncomment to use plain text or env variables
 	$CitrixUserName = $env:citrixusername
 	$CitrixPassword = $env:citrixpassword
-	$releaseversion = $env:CitrixReleaseRersion
+	$ReleaseVersion = $env:CitrixReleaseVersion
 	if ($releaseversion -eq "LTSR") {
 		$ServerVDAURL = $ServerVDAURL_LTSR
 		$DesktopVDAURL = $DesktopVDAURL_LTSR
@@ -67,13 +67,13 @@ function DownloadVDA {
 		Write-Warning "Environment Variable for Citrix Password is missing. Exit Script"
 		Exit
 	}
-	if (!(Get-ChildItem Env:CitrixReleaseRersion -ErrorAction SilentlyContinue)) {
+	if (!(Get-ChildItem Env:CitrixReleaseVersion -ErrorAction SilentlyContinue)) {
 		Write-Warning "Environment Variable for Citrix Release Version (LTSR or CR) is missing. Exit Script"
 		Exit
 	}
 
 	Write-Host "Citrix Username is: $CitrixUserName" -ForegroundColor Cyan
-	Write-Host "Citrix Release Version is: $releaseversion" -ForegroundColor Cyan
+	Write-Host "Citrix Release Version is: $ReleaseVersion" -ForegroundColor Cyan
 
 
 	if (!(Test-Path -Path $DownloadFolder)) {
@@ -154,12 +154,12 @@ $Outfile = $DownloadFolder + "\" + ($DLURL | Split-Path -Leaf)
 
 #Execute
 
-if ($ReleaseVersion -eq "LTSR") {
-	$env:CitrixReleaseVersion = "LTSR"
-}
-if ($ReleaseVersion -eq "CR") {
-	$env:CitrixReleaseVersion = "CR"
-}
+#if ($ReleaseVersion -eq "LTSR") {
+#	$env:CitrixReleaseVersion = "LTSR"
+#}
+#if ($ReleaseVersion -eq "CR") {
+#	$env:CitrixReleaseVersion = "CR"
+#}
 
 CheckandDownloadVDA
 
