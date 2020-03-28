@@ -275,7 +275,8 @@ if ($CitrixVDA.IsPresent) {
         ExecutePhase -PhaseName $PhaseName
         Write-Host "Removing Variables" -ForegroundColor Cyan
         ClearVariable -Variable citrixusername
-        ClearVariable -Variable citrixpassword   
+        ClearVariable -Variable citrixpassword
+        ClearVariable -Variable CitrixReleaseVersion   
     }
 
     if (Test-Path -Path "$ControlFileLocation\Phase1-Apps-CitrixVDA-SecondPass.txt") {
