@@ -3,11 +3,21 @@
 #Can be used as part of a pipeline or MDT task sequence.
 #Ryan Butler TechDrabble.com @ryan_c_butler 07/19/2019
 #Updated by James Kindon
+Param(
+	[Parameter(Mandatory=$False,ValueFromPipeline=$true)] [ValidateSet('CR',
+    'LTSR')] [Array] $ReleaseVersion
+)
 
 # Download URL for the appropriate VDA
-$ServerVDAURL = "https://secureportal.citrix.com/Licensing/Downloads/UnrestrictedDL.aspx?DLID=16837&URL=https://downloads.citrix.com/16837/VDAServerSetup_1912.exe"
-$DesktopVDAURL = "https://secureportal.citrix.com/Licensing/Downloads/UnrestrictedDL.aspx?DLID=16838&URL=https://downloads.citrix.com/16838/VDAWorkstationSetup_1912.exe"
+#LTSR 1912
+$ServerVDAURL_LTSR = "https://secureportal.citrix.com/Licensing/Downloads/UnrestrictedDL.aspx?DLID=16837&URL=https://downloads.citrix.com/16837/VDAServerSetup_1912.exe"
+$DesktopVDAURL_LTSR = "https://secureportal.citrix.com/Licensing/Downloads/UnrestrictedDL.aspx?DLID=16838&URL=https://downloads.citrix.com/16838/VDAWorkstationSetup_1912.exe"
+#Current Release
+$ServerVDAURL_CR = "https://secureportal.citrix.com/Licensing/Downloads/UnrestrictedDL.aspx?DLID=17569&URL=https://downloads.citrix.com/17569/VDAServerSetup_2003.exe"
+$DesktopVDAURL_CR = "https://secureportal.citrix.com/Licensing/Downloads/UnrestrictedDL.aspx?DLID=17570&URL=https://downloads.citrix.com/17570/VDAWorkstationSetup_2003.exe"
+
 $DownloadFolder = "C:\Apps"
+
 
 function CheckandDownloadVDA {
 	if (Test-Path $Outfile) {
@@ -34,6 +44,15 @@ function DownloadVDA {
 	#Uncomment to use plain text or env variables
 	$CitrixUserName = $env:citrixusername
 	$CitrixPassword = $env:citrixpassword
+	$releaseversion = $env:CitrixReleaseRersion
+	if ($releaseversion -eq "LTSR") {
+		$ServerVDAURL = $ServerVDAURL_LTSR
+		$DesktopVDAURL = $DesktopVDAURL_LTSR
+	}
+	if ($releaseversion -eq "CR") {
+		$ServerVDAURL = $ServerVDAURL_CR
+		$DesktopVDAURL = $DesktopVDAURL_CR
+	}
 
 	#Uncomment to use credential object
 	#$creds = get-credential
@@ -48,8 +67,14 @@ function DownloadVDA {
 		Write-Warning "Environment Variable for Citrix Password is missing. Exit Script"
 		Exit
 	}
+	if (!(Get-ChildItem Env:CitrixReleaseRersion -ErrorAction SilentlyContinue)) {
+		Write-Warning "Environment Variable for Citrix Release Version (LTSR or CR) is missing. Exit Script"
+		Exit
+	}
 
 	Write-Host "Citrix Username is: $CitrixUserName" -ForegroundColor Cyan
+	Write-Host "Citrix Release Version is: $releaseversion" -ForegroundColor Cyan
+
 
 	if (!(Test-Path -Path $DownloadFolder)) {
 		New-Item -Path $DownloadFolder -ItemType Directory | Out-Null
@@ -128,6 +153,14 @@ Switch -Regex ((Get-WmiObject Win32_OperatingSystem).Caption) {
 $Outfile = $DownloadFolder + "\" + ($DLURL | Split-Path -Leaf)
 
 #Execute
+
+if ($ReleaseVersion -eq "LTSR") {
+	$env:CitrixReleaseVersion = "LTSR"
+}
+if ($ReleaseVersion -eq "CR") {
+	$env:CitrixReleaseVersion = "CR"
+}
+
 CheckandDownloadVDA
 
 

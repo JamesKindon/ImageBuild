@@ -137,9 +137,10 @@ function ClearVariable {
 }
 
 function RestartComputer {
-    if (Test-Path "$ControlFileLocation\$PhaseName.txt") {
-        Write-Host "$PhaseName Control File Exists. Phase: $PhaseName already complete. No Reboot Required" -ForegroundColor Cyan
-    }
+    # Add a check to cater for VDA first pass (Control file exists before reboot is called)
+    #if (Test-Path "$ControlFileLocation\$PhaseName.txt") {
+    #    Write-Host "$PhaseName Control File Exists. Phase: $PhaseName already complete. No Reboot Required" -ForegroundColor Cyan
+    #}
     else {
         Write-Host "You must restart this computer and run the script again to Continue" -ForegroundColor Yellow
         $Restart = Read-Host "Restart Computer Y/N?"
@@ -251,6 +252,12 @@ if ($CitrixVDA.IsPresent) {
         else {
             Write-Host "Citrix Username is $env:citrixusername" -ForegroundColor Cyan
             Write-Host "Citrix Password has been set" -ForegroundColor Cyan
+        }
+        if (!(Test-Path env:CitrixReleaseRersion)) {
+            $env:CitrixReleaseRersion = Read-Host "Please Select Citrix Release Version: CR or LTSR"
+        }
+        else {
+            Write-Host "Citrix Release Version has been set" -ForegroundColor Cyan
         }
         ExecutePhase -PhaseName $PhaseName
         RestartComputer
