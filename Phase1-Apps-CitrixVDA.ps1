@@ -54,7 +54,7 @@ function DownloadVDA {
 		Write-Warning "Environment Variable for Citrix Password is missing. Exit Script"
 		Exit
 	}
-	if (!(Get-ChildItem Env:CitrixReleaseVersion -ErrorAction SilentlyContinue)) {
+	if (!(Get-ChildItem Env:ReleaseVersion -ErrorAction SilentlyContinue)) {
 		Write-Warning "Environment Variable for Citrix Release Version (LTSR or CR) is missing. Exit Script"
 		Exit
 	}
@@ -122,7 +122,7 @@ function DownloadVDA {
 }
 
 # Check for Version and Set URL
-$ReleaseVersion = $env:CitrixReleaseVersion
+$ReleaseVersion = $env:ReleaseVersion
 if ($ReleaseVersion -eq "LTSR") {
 	$ServerVDAURL = $ServerVDAURL_LTSR
 	$DesktopVDAURL = $DesktopVDAURL_LTSR
