@@ -104,7 +104,21 @@ function DownloadVDA {
 	}
 
 	#Authenticate
-	Invoke-WebRequest -Uri ("https://identity.citrix.com/Utility/STS/Sign-In?ReturnUrl=%2fUtility%2fSTS%2fsaml20%2fpost-binding-response") -WebSession $websession -Method POST -Body $form -ContentType "application/x-www-form-urlencoded" -Verbose -UseBasicParsing | Out-Null
+	#Invoke-WebRequest -Uri ("https://identity.citrix.com/Utility/STS/Sign-In?ReturnUrl=%2fUtility%2fSTS%2fsaml20%2fpost-binding-response") -WebSession $websession -Method POST -Body $form -ContentType "application/x-www-form-urlencoded" -Verbose -UseBasicParsing | Out-Null
+
+	try {
+		Invoke-WebRequest -Uri ("https://identity.citrix.com/Utility/STS/Sign-In?ReturnUrl=%2fUtility%2fSTS%2fsaml20%2fpost-binding-response") -WebSession $websession -Method POST -Body $form -ContentType "application/x-www-form-urlencoded" -UseBasicParsing -ErrorAction Stop | Out-Null
+	}
+	catch {
+		if ($_.Exception.Response.StatusCode.Value__ -eq 500) {
+			Write-Verbose "500 returned on auth. Ignoring"
+			Write-Verbose $_.Exception.Response
+			Write-Verbose $_.Exception.Message
+		}
+		else {
+			throw $_
+		}
+	}
 
 	$download = Invoke-WebRequest -Uri ($DLURL) -WebSession $websession -MaximumRedirection 100 -Verbose -Method GET -UseBasicParsing
 	$webform = @{
