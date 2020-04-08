@@ -69,7 +69,7 @@ Switch -Regex ((Get-WmiObject Win32_OperatingSystem).Caption) {
         choco install autologon -Y
 
         # Set Reg Key to bypass ICA Hooks https://support.citrix.com/article/CTX265011
-        SetSfrHook -ProcessName "msedge.exe"
+        #SetSfrHook -ProcessName "msedge.exe"
 
     }
     "Microsoft Windows 10 Enterprise for Virtual Desktops" {
