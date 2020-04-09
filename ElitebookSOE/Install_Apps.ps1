@@ -42,9 +42,10 @@ Write-Host "====== Install Microsoft OneDrive\"
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/ElitebookSOE/MicrosoftOneDrive.ps1'))
 
 Write-Host "====== Install Microsoft Office\"
+Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/ElitebookSOE/MicrosofOffice.ps1'))
 
-
-
+Write-Host "====== Configure Default File Assocs\"
+Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/ElitebookSOE/DefaultFileAssocs.ps1'))
 
 Write-Host "====== Configuring Start Layouts\"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
