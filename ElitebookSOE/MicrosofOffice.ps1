@@ -111,17 +111,8 @@ Function Install-CoreApps {
     If (!(Test-Path $Dest)) { New-Item -Path $Dest -ItemType Directory -Force -ErrorAction SilentlyContinue | Out-Null }
 
     # Get the Office configuration.xml
-    Switch -Regex ((Get-WmiObject Win32_OperatingSystem).Caption) {
-        "Microsoft Windows Server*" {
-            $url = "https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/Office%20Configs/Office365ProPlusRDS.xml"
-        }
-        "Microsoft Windows 10 Enterprise for Virtual Desktops" {
-            $url = "https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/Office%20Configs/Office365ProPlusRDS.xml"
-        }
-        "Microsoft Windows 10*" {
-            $url = "https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/Office%20Configs/Office365ProPlusRDS.xml"
-        }
-    }
+    $url = "https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/ElitebookSOE/MicrosofOffice.ps1"
+    
     Write-Host "=========== Downloading to: $Dest\$(Split-Path -Path $url -Leaf)"
     Invoke-WebRequest -Uri $url -OutFile "$Dest\$(Split-Path -Path $url -Leaf)" -UseBasicParsing
 

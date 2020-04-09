@@ -35,6 +35,15 @@ choco install vnc-viewer -Y
 choco install windirstat -Y
 choco install citrix-workspace -Y
 choco install zoom-client -Y
+choco install microsoft-teams -Y
+
+Write-Host "====== Install Microsoft OneDrive\"
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/ElitebookSOE/MicrosoftOneDrive.ps1'))
+
+Write-Host "====== Install Microsoft Office\"
+
+
 
 
 Write-Host "====== Configuring Start Layouts\"
