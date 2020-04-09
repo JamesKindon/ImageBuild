@@ -35,3 +35,12 @@ choco install vnc-viewer -Y
 choco install windirstat -Y
 choco install citrix-workspace -Y
 choco install zoom-client -Y
+
+
+Write-Host "====== Configuring Start Layouts\"
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+if (!(Test-Path -Path "C:\Tools")) {
+	New-Item -Path "C:\Tools" -ItemType Directory | Out-Null
+}
+Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/ElitebookSOE/KindonStartLayout.xml' -outfile 'c:\Tools\KindonStartLayout.xml'
+Import-StartLayout -LayoutPath 'c:\Tools\CustomLayout-201KindonStartLayout.xml' -MountPath 'c:\' -Verbose
