@@ -19,7 +19,7 @@ choco install winscp -y
 choco install visualstudiocode -y
 choco install vscode-powershell -y
 choco install lastpass -y --ignore-checksums
-choco install teamviewer -y
+choco install teamviewer -y --ignore-checksums
 choco install slack -y
 choco install microsoft-teams -y
 choco install anydesk -y
