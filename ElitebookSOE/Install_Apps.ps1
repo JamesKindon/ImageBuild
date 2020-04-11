@@ -15,7 +15,8 @@ choco install notepadplusplus.install -Y
 choco install pstools -y
 choco install sysinternals -y
 choco install vlc -Y
-choco install winscp -y
+choco install winscp -Y
+choco install putty -Y
 choco install visualstudiocode -y
 choco install vscode-powershell -y
 choco install lastpass -y --ignore-checksums
@@ -25,7 +26,7 @@ choco install microsoft-teams -y
 choco install anydesk -y
 choco install git.install -Y
 choco install github-desktop -Y
-choco install rdmfree -Y
+choco install rdm -Y
 choco install gimp -y
 choco install microsoft-windows-terminal -Y
 choco install bis-f -Y
@@ -37,6 +38,7 @@ choco install windirstat -Y
 choco install citrix-workspace -Y
 choco install zoom-client -Y
 choco install microsoft-teams -Y
+choco install grammarly -Y
 
 Write-Host "====== Install Microsoft OneDrive\"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
@@ -47,11 +49,3 @@ Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw
 
 Write-Host "====== Configure Default File Assocs\"
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/ElitebookSOE/DefaultFileAssocs.ps1'))
-
-Write-Host "====== Configuring Start Layouts\"
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-if (!(Test-Path -Path "C:\Tools")) {
-	New-Item -Path "C:\Tools" -ItemType Directory | Out-Null
-}
-Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/ElitebookSOE/KindonStartLayout.xml' -outfile 'c:\Tools\KindonStartLayout.xml'
-Import-StartLayout -LayoutPath 'c:\Tools\CustomLayout-201KindonStartLayout.xml' -MountPath 'c:\' -Verbose
