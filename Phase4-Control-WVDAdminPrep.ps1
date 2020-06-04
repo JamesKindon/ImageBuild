@@ -30,3 +30,6 @@ if (!(Test-Path $DownloadFolder)) {
 DownloadComponent -URL "https://saaewvdgeneral.blob.core.windows.net/wvd/Microsoft.RDInfra.RDAgent.msi"
 DownloadComponent -URL "https://saaewvdgeneral.blob.core.windows.net/wvd/Microsoft.RDInfra.RDAgentBootLoader.msi"
 DownloadComponent -URL "https://saaewvdgeneral.blob.core.windows.net/wvd/ITPC-WVD-Image-Processing.ps1"
+
+Write-Host "Downloading Sepago Azure Monitor for WVD, RDS and Citrix"
+DownloadComponent -URL "http://loganalytics.sepago.com/downloads/ITPC-LogAnalyticsAgent.zip"
