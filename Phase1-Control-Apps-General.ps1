@@ -50,7 +50,7 @@ Write-Host "====== Install Adobe Reader DC\"
 choco install adobereader -Y
 
 Write-Host "====== Install Microsoft Teams\"
-choco install microsoft-teams.install -Y
+choco install microsoft-teams.install --params "'/AllUsers /AllUser /NoAutoStart'" -Y
 
 Write-Host "====== Install Microsoft Autoruns\"
 choco install autoruns -Y
