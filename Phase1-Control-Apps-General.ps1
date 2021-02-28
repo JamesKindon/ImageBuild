@@ -49,7 +49,16 @@ choco install googlechrome -Y
 Write-Host "====== Install Adobe Reader DC\"
 choco install adobereader -Y
 
+
 Write-Host "====== Install Microsoft Teams\"
+$KeyPath = "HKLM:\SOFTWARE\Microsoft\Teams\"
+$WVDKey = "IsWVDEnvironment"
+
+if (!(Test-Path $KeyPath)) {
+    New-Item -Path $KeyPath -Force
+    New-ItemProperty -Path $KeyPath -Name $WVDKey -PropertyType "DWORD" -Value "1" -Force 
+}
+
 choco install microsoft-teams.install --params "'/AllUsers /AllUser /NoAutoStart'" -Y
 
 Write-Host "====== Install Microsoft Autoruns\"
