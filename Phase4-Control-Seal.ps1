@@ -5,9 +5,9 @@ Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw
 # Re-enable Defender
 Write-Output "====== Enable Windows Defender real time scan"
 Set-MpPreference -DisableRealtimeMonitoring $false
-Write-Output "====== Enable Windows Store updates"
-reg delete HKLM\Software\Policies\Microsoft\Windows\CloudContent /v DisableWindowsConsumerFeatures /f
-reg delete HKLM\Software\Policies\Microsoft\WindowsStore /v AutoDownload /f
+#Write-Output "====== Enable Windows Store updates"
+#reg delete HKLM\Software\Policies\Microsoft\Windows\CloudContent /v DisableWindowsConsumerFeatures /f
+#reg delete HKLM\Software\Policies\Microsoft\WindowsStore /v AutoDownload /f
 
 # Sysprep
 Write-Output "====== Run Sysprep"
