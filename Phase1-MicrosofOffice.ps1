@@ -102,6 +102,7 @@ Function Install-CoreApps {
     # Install the Evergreen module
     # https://github.com/aaronparker/Evergreen
     Install-Module -Name Evergreen -AllowClobber
+    Import-Module -Name Evergreen -Force
     #endregion
 
     #region Office 365 ProPlus
