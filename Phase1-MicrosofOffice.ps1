@@ -125,7 +125,7 @@ Function Install-CoreApps {
     Write-Host "=========== Downloading to: $Dest\$(Split-Path -Path $url -Leaf)"
     Invoke-WebRequest -Uri $url -OutFile "$Dest\$(Split-Path -Path $url -Leaf)" -UseBasicParsing
 
-    $Office = Get-MicrosoftOffice
+    $Office = Get-EverGreenApp -Name "Microsoft365Apps"
     Write-Host "=========== Downloading to: $Dest\$(Split-Path -Path $Office[0].URI -Leaf)"
     Invoke-WebRequest -Uri $Office[0].URI -OutFile "$Dest\$(Split-Path -Path $Office[0].URI -Leaf)"
     Push-Location -Path $Dest
