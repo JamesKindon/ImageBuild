@@ -3,6 +3,9 @@
 
 #---------Citrix Optimizer
 Write-Host "=============== Downloading Citrix Optimizer"
+If (!(Test-Path -Path "c:\Tools")) {
+    New-Item -Path "C:\Tools" -ItemType Directory -Force | Out-Null
+}
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/CitrixOptimizer.zip" -OutFile "C:\Tools\CitrixOptimizer.Zip" -UseBasicParsing
 Expand-Archive -Path "C:\Tools\CitrixOptimizer.Zip" -DestinationPath "C:\Tools\CitrixOptimizer"
 
