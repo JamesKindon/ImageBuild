@@ -1,0 +1,2 @@
+Write-Host "===== Execute Image Seal with BIS-F" -ForegroundColor "Green"
+start-process -FilePath "powershell.exe" -ArgumentList "-executionpolicy bypass -file ""C:\Program Files (x86)\Base Image Script Framework (BIS-F)\Framework\PrepBISF_Start.ps1""" -Wait -PassThru

@@ -1,0 +1,2 @@
+#Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/JamesKindon/ImageBuild/master/CustomLayout-2019-Basic-Office-x64.xml' -outfile 'c:\Tools\CustomLayout-2019-Basic-Office-x64.xml'
+Import-StartLayout -LayoutPath 'c:\Tools\CustomLayout-2019-Basic-Office-x64.xml' -MountPath 'c:\' -Verbose
