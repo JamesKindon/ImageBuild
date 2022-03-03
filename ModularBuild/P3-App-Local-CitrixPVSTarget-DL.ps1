@@ -7,7 +7,7 @@
 # https://github.com/JamesKindon/Citrix/blob/master/Downloads.csv
 # https://github.com/ryancbutler/Citrix_DL_Scrapper/blob/main/ctx_dls.csv
 
-$Application = "Citrix PVS Target Device" #https://secureportal.citrix.com/udl.asp?DLID=19999&URL=https://downloads.citrix.com/19999/Citrix_Provisioning_1912_19.iso
+$Application = "Citrix PVS Target Device"
 ##//LTSR Release Data
 $DLNumber_LTSR = "19999"
 $DLEXE_LTSR = "Citrix_Provisioning_1912_19.iso" #Citrix_Provisioning_1912_19.iso
