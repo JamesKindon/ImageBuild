@@ -5,13 +5,12 @@
 
 #//Release Data
 $Application = "CitrixOptimizer"
-#$InstallerName = "CitrixCQI.msi"
 
 #$DLNumber = "20209"
 $DLEXE = "CitrixOptimizer.zip"
-$DLURL = "https://fileservice.citrix.com/download/secured/support/article/CTX224676/downloads/CitrixOptimizer.zip"
+#$DLURL = "https://fileservice.citrix.com/download/secured/support/article/CTX224676/downloads/CitrixOptimizer.zip"
+$DLURL = $env:CtxOptimizerURL
 
-#$Arguments = 'OPTIONS="DISABLE_CEIP=1" /q'
 $DownloadFolder = "C:\Apps\Temp\"
 
 $CitrixUserName = $env:CitrixUserName
@@ -141,17 +140,6 @@ function Install {
 
 		Expand-Archive -Path ($DownloadFolder + "\CitrixOptimizer.Zip") -DestinationPath "C:\Tools\CitrixOptimizer" -Force
     }
-
-    #if ($InstallerType -eq "exe") {
-        #Write-Host "===== Installing $($Application)" -ForegroundColor "Green"
-        #Start-Process "$Outfile" -ArgumentList $Arguments -wait -PassThru
-		#Start-Process -FilePath "C:\Apps\Temp\Workspace-Environment-Management-v-2112-01-00-01\Citrix Workspace Environment Management Agent.exe" -ArgumentList $Arguments -wait -PassThru
-    #}
-    #if ($InstallerType -eq "msi") {
-        #Write-host "Installing $Application" -ForegroundColor Cyan
-        #Start-Process "msiexec" -ArgumentList "/i $Outfile $InstallArgs" -Wait -PassThru
-		#Start-Process "msiexec" -ArgumentList "/i ($DownloadFolder + $Application + "\" + $InstallerName) $InstallArgs" -Wait -PassThru
-    #}
 }
 
 #endregion
@@ -160,6 +148,9 @@ function Install {
 # ============================================================================
 # Execute
 # ============================================================================
+Write-Host "============================================================"
+Write-Host "===== Install Citrix Optimizer" -ForegroundColor "Green"
+Write-Host "============================================================"
 if (!(Get-ChildItem Env:CitrixUserName -ErrorAction SilentlyContinue)) {
 	Write-Warning "Environment Variable for Citrix Username is missing. Assuming speficic credential set"
 	if ($null -eq $CitrixUserName) {
@@ -174,13 +165,8 @@ if (!(Get-ChildItem Env:CitrixPassword -ErrorAction SilentlyContinue)) {
 		Exit
 	}
 }
-#if (!(Get-ChildItem Env:ReleaseVersion -ErrorAction SilentlyContinue)) {
-#	Write-Warning "Environment Variable for Citrix Release Version (LTSR or CR) is missing. Defaulting to: CR"
-#	$ReleaseVersion = "CR"
-#}
 
 Write-Host "Citrix Username is: $CitrixUserName" -ForegroundColor Cyan
-#Write-Host "Citrix Release Version is: $ReleaseVersion" -ForegroundColor Cyan
 
 if (!(Test-Path -Path $DownloadFolder)) {
 	New-Item -Path $DownloadFolder -ItemType Directory | Out-Null

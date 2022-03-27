@@ -7,8 +7,12 @@
 $Application = "Citrix Workspace Environment Management"
 $InstallerName = "Citrix Workspace Environment Management Agent.exe"
 
-$DLNumber = "20209"
-$DLEXE = "Workspace-Environment-Management-v-2112-01-00-01.zip"
+##// can set manually if not using variables
+#$DLNumber 	= "20209"
+#$DLEXE 		= "Workspace-Environment-Management-v-2112-01-00-01.zip"
+
+$DLNumber 	= $env:cvad_wem_dl_num
+$DLEXE 		= $env:cvad_wem_dl_name
 
 $Arguments = "/quiet Cloud=1"
 $DownloadFolder = "C:\Apps\Temp\"
@@ -130,6 +134,10 @@ function Install {
 # ============================================================================
 # Execute
 # ============================================================================
+Write-Host "============================================================"
+Write-Host "====== Install Citrix WEM Cloud Agent\" -ForegroundColor "Green"
+Write-Host "============================================================"
+
 if (!(Get-ChildItem Env:CitrixUserName -ErrorAction SilentlyContinue)) {
 	Write-Warning "Environment Variable for Citrix Username is missing. Assuming speficic credential set"
 	if ($null -eq $CitrixUserName) {

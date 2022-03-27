@@ -148,6 +148,10 @@ function get-ctxbinary {
 # ============================================================================
 # Execute
 # ============================================================================
+Write-Host "============================================================"
+Write-Host "====== Install Citrix PVS Target Device\" -ForegroundColor "Green"
+Write-Host "============================================================"
+
 if (!(Get-ChildItem Env:CitrixUserName -ErrorAction SilentlyContinue)) {
 	Write-Warning "Environment Variable for Citrix Username is missing. Assuming speficic credential set"
 	if ($null -eq $CitrixUserName) {

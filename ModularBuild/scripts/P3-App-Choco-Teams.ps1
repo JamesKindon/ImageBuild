@@ -1,4 +1,7 @@
+Write-Host "============================================================"
 Write-Host "====== Install Microsoft Teams\" -ForegroundColor "Green"
+Write-Host "============================================================"
+
 $KeyPath = "HKLM:\SOFTWARE\Microsoft\Teams\"
 $WVDKey = "IsWVDEnvironment"
 

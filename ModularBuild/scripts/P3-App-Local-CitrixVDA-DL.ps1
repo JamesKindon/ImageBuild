@@ -8,16 +8,28 @@
 
 $Application = "Citrix Virtual Delivery Agent"
 ##//LTSR Release Data
-$DLNumber_Server_LTSR = "16837"
-$DLEXE_Server_LTSR = "VDAServerSetup_1912.exe"
-$DLNumber_Workstation_LTSR = "16838"
-$DLEXE_Workstation_LTSR = "VDAWorkstationSetup_1912.exe"
+##// can set manually if not using variables
+#$DLNumber_Server_LTSR       = "16837"
+#$DLEXE_Server_LTSR          = "VDAServerSetup_1912.exe"
+#$DLNumber_Workstation_LTSR  = "16838"
+#$DLEXE_Workstation_LTSR     = "VDAWorkstationSetup_1912.exe"
+
+$DLNumber_Server_LTSR       = $env:cvad_vda_server_dl_num_ltsr
+$DLEXE_Server_LTSR          = $env:cvad_vda_server_dl_name_ltsr
+$DLNumber_Workstation_LTSR  = $env:cvad_vda_workstation_dl_num_ltsr
+$DLEXE_Workstation_LTSR     = $env:cvad_vda_workstation_dl_name_ltsr
 
 ##//Current Release Data
-$DLNumber_Server_CR = "20116"
-$DLEXE_Server_CR = "VDAServerSetup_2112.exe"
-$DLNumber_Workstation_CR = "20117"
-$DLEXE_Workstation_CR = "VDAWorkstationSetup_2112.exe"
+##// can set manually if not using variables
+#$DLNumber_Server_CR         = "20116"
+#$DLEXE_Server_CR            = "VDAServerSetup_2112.exe"
+#$DLNumber_Workstation_CR    = "20117"
+#$DLEXE_Workstation_CR       = "VDAWorkstationSetup_2112.exe"
+
+$DLNumber_Server_CR         = $env:cvad_vda_server_dl_num_cr
+$DLEXE_Server_CR            = $env:cvad_vda_server_dl_name_cr
+$DLNumber_Workstation_CR    = $env:cvad_vda_workstation_dl_num_cr
+$DLEXE_Workstation_CR       = $env:cvad_vda_workstation_dl_name_cr
 
 ##// Arguments
 $Arguments_Server = "/quiet /enable_remote_assistance /virtualmachine /enable_real_time_transport /enable_hdx_ports /enable_hdx_udp_ports /exclude ""Workspace Environment Management"",""User Personalization layer"",""Citrix Files for Outlook"",""Citrix Files for Windows"",""Citrix Supportability Tools"",""Citrix Telemetry Service"",""Citrix Personalization for App-V - VDA"",""Citrix Universal Print Client"" /components vda,plugins" 
@@ -137,6 +149,11 @@ function get-ctxbinary {
 # ============================================================================
 # Execute
 # ============================================================================
+
+Write-Host "============================================================"
+Write-Host "====== Install Citrix VDA\" -ForegroundColor "Green"
+Write-Host "============================================================"
+
 if (!(Get-ChildItem Env:CitrixUserName -ErrorAction SilentlyContinue)) {
 	Write-Warning "Environment Variable for Citrix Username is missing. Assuming speficic credential set"
 	if ($null -eq $CitrixUserName) {

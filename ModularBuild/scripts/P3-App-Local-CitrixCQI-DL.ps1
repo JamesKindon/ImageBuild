@@ -9,7 +9,8 @@ $InstallerName = "CitrixCQI.msi"
 
 #$DLNumber = "20209"
 $DLEXE = "CitrixCQI.zip"
-$DLURL = "https://fileservice.citrix.com/download/secured/support/article/CTX220774/downloads/CitrixCQI.zip"
+#$DLURL = "https://fileservice.citrix.com/download/secured/support/article/CTX220774/downloads/CitrixCQI.zip"
+$DLURL = $Env:CtxCQIURL
 
 $Arguments = 'OPTIONS="DISABLE_CEIP=1" /q'
 $DownloadFolder = "C:\Apps\Temp\"
@@ -168,10 +169,6 @@ if (!(Get-ChildItem Env:CitrixPassword -ErrorAction SilentlyContinue)) {
 		Exit
 	}
 }
-#if (!(Get-ChildItem Env:ReleaseVersion -ErrorAction SilentlyContinue)) {
-#	Write-Warning "Environment Variable for Citrix Release Version (LTSR or CR) is missing. Defaulting to: CR"
-#	$ReleaseVersion = "CR"
-#}
 
 Write-Host "Citrix Username is: $CitrixUserName" -ForegroundColor Cyan
 #Write-Host "Citrix Release Version is: $ReleaseVersion" -ForegroundColor Cyan
