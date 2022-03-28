@@ -1,25 +1,47 @@
-#Downloads and Install Citrix WEM
-#Can be used as part of a pipeline or MDT task sequence.
-# https://github.com/ryancbutler/Citrix/blob/master/XenDesktop/AutoDownload/Helpers/Downloads.csv
+<#
+.SYNOPSIS
+    Downloads and Install Citrix WEM
+.DESCRIPTION
+	Can be used as part of a pipeline or MDT task sequence.
+	https://github.com/ryancbutler/Citrix/blob/master/XenDesktop/AutoDownload/Helpers/Downloads.csv
+.EXAMPLE
+	.\P3-App-Local-CitrixOptimizer-DL.ps1 -CredentialPrompt -UseScriptVariables
+	Will prompt for credentials and use hardcoded download details in script
 
+	.\P3-App-Local-CitrixOptimizer-DL.ps1
+	Assumes pipeline environment variables
+#>
 
+#region Params
+# ============================================================================
+# Parameters
+# ============================================================================
+Param(
+    [Parameter(Mandatory = $false)]
+    [switch]$CredentialPrompt, # Prompt for Credentials (not using environment variables)
+
+	[Parameter(Mandatory = $false)]
+    [switch]$UseScriptVariables # Use script variables for downloads (not using environment variables)
+
+)
+#endregion
+
+#region Variables
+# ============================================================================
+# Variables
+# ============================================================================
+# Set Variables
 #//Release Data
-$Application = "CitrixOptimizer"
-
-#$DLNumber = "20209"
-$DLEXE = "CitrixOptimizer.zip"
-#$DLURL = "https://fileservice.citrix.com/download/secured/support/article/CTX224676/downloads/CitrixOptimizer.zip"
-$DLURL = $env:CtxOptimizerURL
-
+$Application 	= "CitrixOptimizer"
+$DLEXE 			= "CitrixOptimizerTool.zip"
 $DownloadFolder = "C:\Apps\Temp\"
-
+#//Hardcoded Variables
+$DLLink 		= "https://fileservice.citrix.com/download/secured/support/article/CTX224676/downloads/CitrixOptimizer.zip" #Only used when UseScriptVariables Switch is present, else pipeline
+#//Pipeline Variables
+$DLURL 			= $env:CtxOptimizerURL
 $CitrixUserName = $env:CitrixUserName
 $CitrixPassword = $env:CitrixPassword
-
-#Uncomment to use credential object
-#$creds = get-credential
-#$CitrixUserName = $creds.UserName
-#$CitrixPassword = $creds.GetNetworkCredential().Password
+#endregion
 
 #region Functions
 # ============================================================================
@@ -151,15 +173,29 @@ function Install {
 Write-Host "============================================================"
 Write-Host "===== Install Citrix Optimizer" -ForegroundColor "Green"
 Write-Host "============================================================"
+
+if ($CredentialPrompt.IsPresent) {
+	Write-Host "CredentialPrompt present - using credential prompt"
+	$creds = get-credential
+	$CitrixUserName = $creds.UserName
+	$CitrixPassword = $creds.GetNetworkCredential().Password
+}
+
+if ($UseScriptVariables.IsPresent) {
+	Write-Host "UseScriptVariables present - using hardcoded script values"
+	$DLURL = $DLLink
+}
+
 if (!(Get-ChildItem Env:CitrixUserName -ErrorAction SilentlyContinue)) {
-	Write-Warning "Environment Variable for Citrix Username is missing. Assuming speficic credential set"
+	Write-Warning "Environment Variable for Citrix Username is missing. Assuming specific credential set"
 	if ($null -eq $CitrixUserName) {
 		Write-Warning "Citrix Username is missing. Exit Script"
 		Exit
 	}
 }
+
 if (!(Get-ChildItem Env:CitrixPassword -ErrorAction SilentlyContinue)) {
-	Write-Warning "Environment Variable for Citrix Password is missing. Assuming speficic credential set"
+	Write-Warning "Environment Variable for Citrix Password is missing. Assuming specific credential set"
 	if ($null -eq $CitrixPassword) {
 		Write-Warning "Citrix Password is missing. Exit Script"
 		Exit

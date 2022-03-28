@@ -1,27 +1,49 @@
-#Downloads and Install Citrix WEM
-#Can be used as part of a pipeline or MDT task sequence.
-# https://github.com/ryancbutler/Citrix/blob/master/XenDesktop/AutoDownload/Helpers/Downloads.csv
+<#
+.SYNOPSIS
+    Downloads and Install Citrix CQI
+.DESCRIPTION
+	Can be used as part of a pipeline or MDT task sequence.
+	https://github.com/ryancbutler/Citrix/blob/master/XenDesktop/AutoDownload/Helpers/Downloads.csv
+.EXAMPLE
+	.\P3-App-Local-CitrixCQI-DL.ps1 -CredentialPrompt -UseScriptVariables
+	Will prompt for credentials and use hardcoded download details in script
 
+	.\P3-App-Local-CitrixCQI-DL.ps1
+	Assumes pipeline environment variables
+#>
 
+#region Params
+# ============================================================================
+# Parameters
+# ============================================================================
+Param(
+    [Parameter(Mandatory = $false)]
+    [switch]$CredentialPrompt, # Prompt for Credentials (not using environment variables)
+
+	[Parameter(Mandatory = $false)]
+    [switch]$UseScriptVariables # Use script variables for downloads (not using environment variables)
+
+)
+#endregion
+
+#region Variables
+# ============================================================================
+# Variables
+# ============================================================================
+# Set Variables
 #//Release Data
-$Application = "CitrixCQI"
-$InstallerName = "CitrixCQI.msi"
-
-#$DLNumber = "20209"
-$DLEXE = "CitrixCQI.zip"
-#$DLURL = "https://fileservice.citrix.com/download/secured/support/article/CTX220774/downloads/CitrixCQI.zip"
-$DLURL = $Env:CtxCQIURL
-
-$Arguments = 'OPTIONS="DISABLE_CEIP=1" /q'
+$Application 	= "CitrixCQI"
+$InstallerName 	= "CitrixCQI.msi"
+$DLEXE 			= "CitrixCQI.zip"
+#//Hardcoded Variables
+$DLLink 		= "https://fileservice.citrix.com/download/secured/support/article/CTX220774/downloads/CitrixCQI.zip" #Only used when UseScriptVariables Switch is present, else pipeline
+$Arguments 		= 'OPTIONS="DISABLE_CEIP=1" /q'
 $DownloadFolder = "C:\Apps\Temp\"
-
+#//Pipeline Variables
+$DLURL 			= $Env:CtxCQIURL
 $CitrixUserName = $env:CitrixUserName
 $CitrixPassword = $env:CitrixPassword
-
-#Uncomment to use credential object
-#$creds = get-credential
-#$CitrixUserName = $creds.UserName
-#$CitrixPassword = $creds.GetNetworkCredential().Password
+#endregion
 
 #region Functions
 # ============================================================================
@@ -155,15 +177,33 @@ function Install {
 # ============================================================================
 # Execute
 # ============================================================================
+
+Write-Host "============================================================"
+Write-Host "===== Install Citrix CQI" -ForegroundColor "Green"
+Write-Host "============================================================"
+
+if ($CredentialPrompt.IsPresent) {
+	Write-Host "CredentialPrompt present - using credential prompt"
+	$creds = get-credential
+	$CitrixUserName = $creds.UserName
+	$CitrixPassword = $creds.GetNetworkCredential().Password
+}
+
+if ($UseScriptVariables.IsPresent) {
+	Write-Host "UseScriptVariables present - using hardcoded script values"
+	$DLURL = $DLLink
+}
+
 if (!(Get-ChildItem Env:CitrixUserName -ErrorAction SilentlyContinue)) {
-	Write-Warning "Environment Variable for Citrix Username is missing. Assuming speficic credential set"
+	Write-Warning "Environment Variable for Citrix Username is missing. Assuming specific credential set"
 	if ($null -eq $CitrixUserName) {
 		Write-Warning "Citrix Username is missing. Exit Script"
 		Exit
 	}
 }
+
 if (!(Get-ChildItem Env:CitrixPassword -ErrorAction SilentlyContinue)) {
-	Write-Warning "Environment Variable for Citrix Password is missing. Assuming speficic credential set"
+	Write-Warning "Environment Variable for Citrix Password is missing. Assuming specific credential set"
 	if ($null -eq $CitrixPassword) {
 		Write-Warning "Citrix Password is missing. Exit Script"
 		Exit
@@ -171,7 +211,6 @@ if (!(Get-ChildItem Env:CitrixPassword -ErrorAction SilentlyContinue)) {
 }
 
 Write-Host "Citrix Username is: $CitrixUserName" -ForegroundColor Cyan
-#Write-Host "Citrix Release Version is: $ReleaseVersion" -ForegroundColor Cyan
 
 if (!(Test-Path -Path $DownloadFolder)) {
 	New-Item -Path $DownloadFolder -ItemType Directory | Out-Null

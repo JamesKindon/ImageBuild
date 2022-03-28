@@ -1,36 +1,61 @@
+<#
+.SYNOPSIS
+    Downloads and Install Citrix PVS Target device
+.DESCRIPTION
+	Can be used as part of a pipeline or MDT task sequence.
+	https://github.com/ryancbutler/Citrix/blob/master/XenDesktop/AutoDownload/Helpers/Downloads.csv
+	Ryan Butler TechDrabble.com @ryan_c_butler 07/19/2019
+	Updated by James Kindon
+	https://github.com/JamesKindon/Citrix/blob/master/Downloads.csv
+	https://github.com/ryancbutler/Citrix_DL_Scrapper/blob/main/ctx_dls.csv
+.EXAMPLE
+	.\P3-App-Local-CitrixPVSTarget-DL.ps1 -CredentialPrompt -UseScriptVariables
+	Will prompt for credentials and use hardcoded download details in script
 
-#Downloads and Install Citrix PVS Target Device
-#Can be used as part of a pipeline or MDT task sequence.
-#Ryan Butler TechDrabble.com @ryan_c_butler 07/19/2019
-#Updated by James Kindon
-# https://github.com/ryancbutler/Citrix/blob/master/XenDesktop/AutoDownload/Helpers/Downloads.csv
-# https://github.com/JamesKindon/Citrix/blob/master/Downloads.csv
-# https://github.com/ryancbutler/Citrix_DL_Scrapper/blob/main/ctx_dls.csv
+	.\P3-App-Local-CitrixPVSTarget-DL.ps1
+	Assumes pipeline environment variables
+#>
 
-$Application = "Citrix PVS Target Device"
+#region Params
+# ============================================================================
+# Parameters
+# ============================================================================
+Param(
+    [Parameter(Mandatory = $false)]
+    [switch]$CredentialPrompt, # Prompt for Credentials (not using environment variables)
+
+	[Parameter(Mandatory = $false)]
+    [switch]$UseScriptVariables # Use script variables for downloads (not using environment variables)
+
+)
+#endregion
+
+#region Variables
+# ============================================================================
+# Variables
+# ============================================================================
+# Set Variables
+#//Release Data
+$Application 		= "Citrix PVS Target Device"
 ##//LTSR Release Data
-$DLNumber_LTSR = "19999"
-$DLEXE_LTSR = "Citrix_Provisioning_1912_19.iso" #Citrix_Provisioning_1912_19.iso
-
+$DLNumber_LTSR_HC 	= "19999" 							#Only used when UseScriptVariables Switch is present, else pipeline
+$DLEXE_LTSR_HC 		= "Citrix_Provisioning_1912_19.iso" #Only used when UseScriptVariables Switch is present, else pipeline
 ##//Current Release Data
-$DLNumber_CR = "20119"
-$DLEXE_CR = "Citrix_Provisioning_2112.iso" #Citrix_Provisioning_2112.iso
-
-$InstallExe = "PVS_Device_x64.exe"
-
-##// Arguments
-$Arguments = "/s /v`"/qn /norestart`""
-
-$DownloadFolder = "C:\Apps\Temp\"
-
-$ReleaseVersion = $env:ReleaseVersion
-$CitrixUserName = $env:CitrixUserName
-$CitrixPassword = $env:CitrixPassword
-
-#Uncomment to use credential object
-#$creds = get-credential
-#$CitrixUserName = $creds.UserName
-#$CitrixPassword = $creds.GetNetworkCredential().Password
+$DLNumber_CR_HC 	= "20119" 							#Only used when UseScriptVariables Switch is present, else pipeline
+$DLEXE_CR_HC 		= "Citrix_Provisioning_2112.iso" 	#Only used when UseScriptVariables Switch is present, else pipeline
+$InstallExe 		= "PVS_Device_x64.exe"
+##//Arguments
+$Arguments 			= "/s /v`"/qn /norestart`""
+$DownloadFolder 	= "C:\Apps\Temp\"
+#//Pipeline Variables
+$DLNumber_LTSR		= $env:pvs_dl_num_ltsr
+$DLEXE_LTSR			= $env:pvs_dl_name_ltsr
+$DLNumber_CR		= $env:pvs_dl_num_cr
+$DLEXE_CR			= $env:pvs_dl_name_cr
+$ReleaseVersion 	= $env:ReleaseVersion
+$CitrixUserName 	= $env:CitrixUserName
+$CitrixPassword 	= $env:CitrixPassword
+#endregion
 
 #region Functions
 # ============================================================================
@@ -152,15 +177,31 @@ Write-Host "============================================================"
 Write-Host "====== Install Citrix PVS Target Device\" -ForegroundColor "Green"
 Write-Host "============================================================"
 
+if ($CredentialPrompt.IsPresent) {
+	Write-Host "CredentialPrompt present - using credential prompt"
+	$creds = get-credential
+	$CitrixUserName = $creds.UserName
+	$CitrixPassword = $creds.GetNetworkCredential().Password
+}
+
+if ($UseScriptVariables.IsPresent) {
+	Write-Host "UseScriptVariables present - using hardcoded script values"
+	$DLNumber_LTSR 	= $DLNumber_LTSR_HC
+	$DLEXE_LTSR 	= $DLEXE_LTSR_HC
+	$DLNumber_CR 	= $DLNumber_CR_HC
+	$DLEXE_CR 		= $DLEXE_CR_HC
+}
+
 if (!(Get-ChildItem Env:CitrixUserName -ErrorAction SilentlyContinue)) {
-	Write-Warning "Environment Variable for Citrix Username is missing. Assuming speficic credential set"
+	Write-Warning "Environment Variable for Citrix Username is missing. Assuming specific credential set"
 	if ($null -eq $CitrixUserName) {
 		Write-Warning "Citrix Username is missing. Exit Script"
 		Exit
 	}
 }
+
 if (!(Get-ChildItem Env:CitrixPassword -ErrorAction SilentlyContinue)) {
-	Write-Warning "Environment Variable for Citrix Password is missing. Assuming speficic credential set"
+	Write-Warning "Environment Variable for Citrix Password is missing. Assuming specific credential set"
 	if ($null -eq $CitrixPassword) {
 		Write-Warning "Citrix Password is missing. Exit Script"
 		Exit
