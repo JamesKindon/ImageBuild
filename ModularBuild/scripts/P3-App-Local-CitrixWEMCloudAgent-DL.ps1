@@ -8,8 +8,8 @@ $Application = "Citrix Workspace Environment Management"
 $InstallerName = "Citrix Workspace Environment Management Agent.exe"
 
 ##// can set manually if not using variables
-#$DLNumber 	= "20209"
-#$DLEXE 		= "Workspace-Environment-Management-v-2112-01-00-01.zip"
+#$DLNumber 	= "16122"
+#$DLEXE 		= "Workspace-Environment-Management-Agent-2201.2.zip"
 
 $DLNumber 	= $env:cvad_wem_dl_num
 $DLEXE 		= $env:cvad_wem_dl_name

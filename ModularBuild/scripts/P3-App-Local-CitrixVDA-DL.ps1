@@ -21,10 +21,10 @@ $DLEXE_Workstation_LTSR     = $env:cvad_vda_workstation_dl_name_ltsr
 
 ##//Current Release Data
 ##// can set manually if not using variables
-#$DLNumber_Server_CR         = "20116"
-#$DLEXE_Server_CR            = "VDAServerSetup_2112.exe"
-#$DLNumber_Workstation_CR    = "20117"
-#$DLEXE_Workstation_CR       = "VDAWorkstationSetup_2112.exe"
+#$DLNumber_Server_CR         = "20429"
+#$DLEXE_Server_CR            = "VDAServerSetup_2203.exe"
+#$DLNumber_Workstation_CR    = "20430"
+#$DLEXE_Workstation_CR       = "VDAWorkstationSetup_2203.exe"
 
 $DLNumber_Server_CR         = $env:cvad_vda_server_dl_num_cr
 $DLEXE_Server_CR            = $env:cvad_vda_server_dl_name_cr
