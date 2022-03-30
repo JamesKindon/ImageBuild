@@ -1,11 +1,5 @@
 Write-Host "=====  Executing Citrix Optimizer" -ForegroundColor "Green"
 
-$TempAppInstallDir = "C:\Apps\Temp"
-
-if (!(Test-Path -Path $TempAppInstallDir)) {
-    New-Item -Path $TempAppInstallDir -ItemType Directory -Force | Out-Null
-}
-
 Set-ExecutionPolicy Bypass -Force
 #//  Remove execution if using BIS-F
 #& "C:\Tools\CitrixOptimizer\CtxOptimizerEngine.ps1" -mode Execute
