@@ -32,15 +32,15 @@ Param(
 # ============================================================================
 # Set Variables
 #//Release Data
-$Application 		= "CitrixOptimizer"
-$DLEXE 				= "CitrixOptimizerTool.zip"
-$DownloadFolder 	= "C:\Apps\Temp\"
+$Application        = "CitrixOptimizer"
+$DLEXE              = "CitrixOptimizerTool.zip"
+$DownloadFolder     = "C:\Apps\Temp\"
 #//Hardcoded Variables
-$DLLink 			= "https://fileservice.citrix.com/download/secured/support/article/CTX224676/downloads/CitrixOptimizerTool.zip" #Only used when UseScriptVariables Switch is present, else pipeline
+$DLLink             = "https://fileservice.citrix.com/download/secured/support/article/CTX224676/downloads/CitrixOptimizerTool.zip" #Only used when UseScriptVariables Switch is present, else pipeline
 #//Pipeline Variables
-$DLURL 				= $env:CtxOptimizerURL
-$CitrixUserName 	= $env:CitrixUserName
-$CitrixPassword 	= $env:CitrixPassword
+$DLURL              = $env:CtxOptimizerURL
+$CitrixUserName     = $env:CitrixUserName
+$CitrixPassword     = $env:CitrixPassword
 #endregion
 
 #region Functions
