@@ -38,23 +38,23 @@ Param(
 #//Release Data
 $Application        = "Citrix PVS Target Device"
 ##//LTSR Release Data
-$DLNumber_LTSR_HC   = "19999" 							#Only used when UseScriptVariables Switch is present, else pipeline
+$DLNumber_LTSR_HC   = "19999"                           #Only used when UseScriptVariables Switch is present, else pipeline
 $DLEXE_LTSR_HC      = "Citrix_Provisioning_1912_19.iso" #Only used when UseScriptVariables Switch is present, else pipeline
 ##//Current Release Data
-$DLNumber_CR_HC     = "20119" 							#Only used when UseScriptVariables Switch is present, else pipeline
-$DLEXE_CR_HC        = "Citrix_Provisioning_2112.iso" 	#Only used when UseScriptVariables Switch is present, else pipeline
+$DLNumber_CR_HC     = "20119"                           #Only used when UseScriptVariables Switch is present, else pipeline
+$DLEXE_CR_HC        = "Citrix_Provisioning_2112.iso"    #Only used when UseScriptVariables Switch is present, else pipeline
 $InstallExe         = "PVS_Device_x64.exe"
 ##//Arguments
 $Arguments          = "/s /v`"/qn /norestart`""
-$DownloadFolder		= "C:\Apps\Temp\"
+$DownloadFolder     = "C:\Apps\Temp\"
 #//Pipeline Variables
-$DLNumber_LTSR		= $env:pvs_dl_num_ltsr
-$DLEXE_LTSR			= $env:pvs_dl_name_ltsr
-$DLNumber_CR		= $env:pvs_dl_num_cr
-$DLEXE_CR			= $env:pvs_dl_name_cr
-$ReleaseVersion		= $env:ReleaseVersion
-$CitrixUserName		= $env:CitrixUserName
-$CitrixPassword		= $env:CitrixPassword
+$DLNumber_LTSR      = $env:pvs_dl_num_ltsr
+$DLEXE_LTSR         = $env:pvs_dl_name_ltsr
+$DLNumber_CR        = $env:pvs_dl_num_cr
+$DLEXE_CR           = $env:pvs_dl_name_cr
+$ReleaseVersion     = $env:ReleaseVersion
+$CitrixUserName     = $env:CitrixUserName
+$CitrixPassword     = $env:CitrixPassword
 #endregion
 
 #region Functions
