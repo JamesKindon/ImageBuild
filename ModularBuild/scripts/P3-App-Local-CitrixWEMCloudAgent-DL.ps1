@@ -36,18 +36,18 @@ Param(
 # ============================================================================
 # Set Variables
 #//Release Data
-$Application 	= "Citrix Workspace Environment Management"
-$InstallerName 	= "Citrix Workspace Environment Management Agent.exe"
-$DLNumber_HC	= "16122" 												#Only used when UseScriptVariables Switch is present, else pipeline
-$DLEXE_HC		= "Workspace-Environment-Management-Agent-2201.2.zip" 	#Only used when UseScriptVariables Switch is present, else pipeline
+$Application        = "Citrix Workspace Environment Management"
+$InstallerName      = "Citrix Workspace Environment Management Agent.exe"
+$DLNumber_HC        = "16122"                                               #Only used when UseScriptVariables Switch is present, else pipeline
+$DLEXE_HC           = "Workspace-Environment-Management-Agent-2201.2.zip"   #Only used when UseScriptVariables Switch is present, else pipeline
 ##//Arguments
-$Arguments 		= "/quiet Cloud=1"
-$DownloadFolder = "C:\Apps\Temp\"
+$Arguments          = "/quiet Cloud=1"
+$DownloadFolder     = "C:\Apps\Temp\"
 #//Pipeline Variables
-$DLNumber 		= $env:cvad_wem_dl_num
-$DLEXE 			= $env:cvad_wem_dl_name
-$CitrixUserName = $env:CitrixUserName
-$CitrixPassword = $env:CitrixPassword
+$DLNumber           = $env:cvad_wem_dl_num
+$DLEXE              = $env:cvad_wem_dl_name
+$CitrixUserName     = $env:CitrixUserName
+$CitrixPassword     = $env:CitrixPassword
 
 #endregion
 
