@@ -17,11 +17,11 @@
 # Parameters
 # ============================================================================
 Param(
-	[Parameter(Mandatory = $false)]
-	[switch]$CredentialPrompt, # Prompt for Credentials (not using environment variables)
+    [Parameter(Mandatory = $false)]
+    [switch]$CredentialPrompt, # Prompt for Credentials (not using environment variables)
 
 	[Parameter(Mandatory = $false)]
-	[switch]$UseScriptVariables # Use script variables for downloads (not using environment variables)
+    [switch]$UseScriptVariables # Use script variables for downloads (not using environment variables)
 
 )
 #endregion
@@ -32,15 +32,15 @@ Param(
 # ============================================================================
 # Set Variables
 #//Release Data
-$Application        = "CitrixOptimizer"
-$DLEXE              = "CitrixOptimizerTool.zip"
-$DownloadFolder     = "C:\Apps\Temp\"
+$Application 	= "CitrixOptimizer"
+$DLEXE 			= "CitrixOptimizerTool.zip"
+$DownloadFolder = "C:\Apps\Temp\"
 #//Hardcoded Variables
-$DLLink             = "https://fileservice.citrix.com/download/secured/support/article/CTX224676/downloads/CitrixOptimizerTool.zip" #Only used when UseScriptVariables Switch is present, else pipeline
+$DLLink 		= "https://fileservice.citrix.com/download/secured/support/article/CTX224676/downloads/CitrixOptimizerTool.zip" #Only used when UseScriptVariables Switch is present, else pipeline
 #//Pipeline Variables
-$DLURL              = $env:CtxOptimizerURL
-$CitrixUserName     = $env:CitrixUserName
-$CitrixPassword     = $env:CitrixPassword
+$DLURL 			= $env:CtxOptimizerURL
+$CitrixUserName = $env:CitrixUserName
+$CitrixPassword = $env:CitrixPassword
 #endregion
 
 #region Functions
@@ -48,16 +48,16 @@ $CitrixPassword     = $env:CitrixPassword
 # Functions
 # ============================================================================
 function CheckandDownload {
-	if (Test-Path $Outfile) {
-		Write-Host "$Outfile exists, proceeding with install"
-		Install
-	}
-	else {
+    if (Test-Path $Outfile) {
+        Write-Host "$Outfile exists, proceeding with install"
+        Install
+    }
+    else {
 		Write-Host "Downloading Install File $($DLEXE), Please Wait...."
 		#Get-CTXBinary -DLNUMBER $DLNumber -DLEXE $DLEXE -CitrixUserName $CitrixUserName -CitrixPassword $CitrixPassword -DLPATH $DownloadFolder
 		Download
-		Install
-	}
+        Install
+    }
 }
 
 function get-ctxbinary {
@@ -131,37 +131,37 @@ function get-ctxbinary {
 }
 
 function Download {
-	#Initialize Session 
-	Invoke-WebRequest "https://identity.citrix.com/Utility/STS/Sign-In" -SessionVariable websession -UseBasicParsing | Out-Null
+#Initialize Session 
+Invoke-WebRequest "https://identity.citrix.com/Utility/STS/Sign-In" -SessionVariable websession -UseBasicParsing | Out-Null
 
-	#Set Form
-	$form = @{
-		"persistent" = "1"
-		"userName"   = $CitrixUserName
-		"loginbtn"   = ""
-		"password"   = $CitrixPassword
-		"returnURL"  = "https://login.citrix.com/bridge?url=https://support.citrix.com/article/CTX224676"
-		"errorURL"   = "https://login.citrix.com?url=https://support.citrix.com/article/CTX224676&err=y"
-	}
-	#Authenticate
-	Invoke-WebRequest -Uri ("https://identity.citrix.com/Utility/STS/Sign-In") -WebSession $websession -Method POST -Body $form -ContentType "application/x-www-form-urlencoded" -UseBasicParsing | Out-Null
+#Set Form
+$form = @{
+	"persistent" = "1"
+	"userName" = $CitrixUserName
+	"loginbtn" = ""
+	"password" = $CitrixPassword
+	"returnURL" = "https://login.citrix.com/bridge?url=https://support.citrix.com/article/CTX224676"
+	"errorURL" = "https://login.citrix.com?url=https://support.citrix.com/article/CTX224676&err=y"
+}
+#Authenticate
+Invoke-WebRequest -Uri ("https://identity.citrix.com/Utility/STS/Sign-In") -WebSession $websession -Method POST -Body $form -ContentType "application/x-www-form-urlencoded" -UseBasicParsing | Out-Null
 
-	#Download File
-	Invoke-WebRequest -WebSession $websession -Uri $DLURL -OutFile $OutFile -Verbose -UseBasicParsing
+#Download File
+Invoke-WebRequest -WebSession $websession -Uri $DLURL -OutFile $OutFile -Verbose -UseBasicParsing
 
 }
 
 function Install {
 	Set-MpPreference -DisableRealtimeMonitoring $True -ErrorAction SilentlyContinue
-	if ($DLEXE -like "*.zip") {
+    if ($DLEXE -like "*.zip") {
 
 		If (!(Test-Path -Path "c:\Tools")) {
 			New-Item -Path "C:\Tools" -ItemType Directory -Force | Out-Null
 		}
 		Write-Host "Extracting Archive to $($DownloadFolder + $Application)" -ForegroundColor Cyan
 
-		Expand-Archive -Path ($DownloadFolder + "\CitrixOptimizer.Zip") -DestinationPath "C:\Tools\CitrixOptimizer" -Force
-	}
+		Expand-Archive -Path ($DownloadFolder + $DLEXE) -DestinationPath "C:\Tools\CitrixOptimizer" -Force
+    }
 }
 
 #endregion
