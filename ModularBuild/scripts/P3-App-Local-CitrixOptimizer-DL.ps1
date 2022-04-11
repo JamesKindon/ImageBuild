@@ -35,6 +35,7 @@ Param(
 $Application 	= "CitrixOptimizer"
 $DLEXE 			= "CitrixOptimizerTool.zip"
 $DownloadFolder = "C:\Apps\Temp\"
+$OptimizerHome  = "C:\Tools\CitrixOptimizer"
 #//Hardcoded Variables
 $DLLink 		= "https://fileservice.citrix.com/download/secured/support/article/CTX224676/downloads/CitrixOptimizerTool.zip" #Only used when UseScriptVariables Switch is present, else pipeline
 #//Pipeline Variables
@@ -158,9 +159,8 @@ function Install {
 		If (!(Test-Path -Path "c:\Tools")) {
 			New-Item -Path "C:\Tools" -ItemType Directory -Force | Out-Null
 		}
-		Write-Host "Extracting Archive to $($DownloadFolder + $Application)" -ForegroundColor Cyan
-
-		Expand-Archive -Path ($DownloadFolder + $DLEXE) -DestinationPath "C:\Tools\CitrixOptimizer" -Force
+		Write-Host "Extracting Archive to $($OptimizerHome )" -ForegroundColor Cyan
+		Expand-Archive -Path ($DownloadFolder + $DLEXE) -DestinationPath $OptimizerHome -Force
     }
 }
 

@@ -65,6 +65,7 @@ if ($UseScriptVariables.IsPresent) {
 	Write-Host "UseScriptVariables present - using hardcoded script values"
 	$Base   = $Base_HC
     $Key    = $Key_HC
+    $URI    = $Base + $AppInstallSource + $Key
 }
 
 
