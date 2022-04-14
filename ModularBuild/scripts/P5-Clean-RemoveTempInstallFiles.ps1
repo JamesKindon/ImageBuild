@@ -1,2 +1,7 @@
 Write-Host "===== Clean Temp Install Files" -ForegroundColor "Green"
-Remove-Item -path "C:\Apps\Temp" -force -Recurse
+
+$PathToClean = "C:\Apps\Temp"
+
+if (Test-Path -Path $PathToClean) {
+    Remove-Item -path $PathToClean -force -Recurse
+}
