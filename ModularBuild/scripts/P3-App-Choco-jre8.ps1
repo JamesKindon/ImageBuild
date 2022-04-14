@@ -1,9 +1,8 @@
 Write-Host "============================================================"
-Write-Host "===== Install FSlogix Apps and Rules Editor" -ForegroundColor "Green"
+Write-Host "====== Install JRE8" -ForegroundColor "Green"
 Write-Host "============================================================"
 
-choco install fslogix -Y --limit-output
-choco install fslogix-rule -Y --limit-output
+choco install server-jre8 -Y --limit-output
 
 ## The below is designed to allow pipeline continuation on failure - used for testing phases. Variable typically set in DevOps
 if ($LASTEXITCODE -ne "0" -and $Env:FailureOverrideCode -eq "0") {
