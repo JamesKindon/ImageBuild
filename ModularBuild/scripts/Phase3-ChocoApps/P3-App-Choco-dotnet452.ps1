@@ -2,7 +2,12 @@ Write-Host "============================================================"
 Write-Host "====== Install Dotnet Framework 4.5.2" -ForegroundColor "Green"
 Write-Host "============================================================"
 
-choco install dotnet4.5.2 -Y --limit-output
+if (-not (Test-Path "C:\ProgramData\chocolatey\choco.exe")) {
+    Write-Host "Chocolatey not installed, attempting to install"
+    Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+}
+
+choco install dotnet4.5.2 -Y --limit-output --ignore-checksums
 
 ## The below is designed to allow pipeline continuation on failure - used for testing phases. Variable typically set in DevOps
 if ($LASTEXITCODE -ne "0" -and $Env:FailureOverrideCode -eq "0") {
