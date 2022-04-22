@@ -14,22 +14,6 @@
 # ============================================================================
 #endregion
 
-#region Variables
-# ============================================================================
-# Variables
-# ============================================================================
-# Set Variables
-#//Release Data
-
-$Application        = "VideoLanVlcPlayer"
-$DownloadFolder     = "C:\Apps\Temp\"
-$URI                = (Get-EvergreenApp -Name "VideoLanVlcPlayer" | Where-Object {$_.Architecture -eq "x64" -and $_.Type -eq "EXE"}).uri
-$AppInstallSource   = $URI | Split-Path -Leaf 
-$InstallExe         = $AppInstallSource
-$Arguments          = "/S"
-$Modules            = @("Evergreen")
-#endregion
-
 #region Functions
 # ============================================================================
 # Functions
@@ -87,15 +71,33 @@ function CheckForModules {
     #endregion
 }
 
+# Checking Modules
+CheckForModules
+
 #endregion
+
+#region Variables
+# ============================================================================
+# Variables
+# ============================================================================
+# Set Variables
+#//Release Data
+
+$Application        = "VideoLanVlcPlayer"
+$DownloadFolder     = "C:\Apps\Temp\"
+$URI                = (Get-EvergreenApp -Name "VideoLanVlcPlayer" | Where-Object {$_.Architecture -eq "x64" -and $_.Type -eq "EXE"}).uri
+$AppInstallSource   = $URI | Split-Path -Leaf 
+$InstallExe         = $AppInstallSource
+$Arguments          = "/S"
+$Modules            = @("Evergreen")
+#endregion
+
+
 
 #Region Execute
 # ============================================================================
 # Execute
 # ============================================================================
-
-# Checking Modules
-CheckForModules
 
 Write-Host "============================================================"
 Write-Host "===== Downloading $($Application)"

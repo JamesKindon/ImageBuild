@@ -14,22 +14,6 @@
 # ============================================================================
 #endregion
 
-#region Variables
-# ============================================================================
-# Variables
-# ============================================================================
-# Set Variables
-#//Release Data
-
-$Application        = "MicrosoftPowerBIReportBuilder"
-$DownloadFolder     = "C:\Apps\Temp\"
-$URI                = (Get-NevergreenApp -Name MicrosoftPowerBIReportBuilder).Uri
-$AppInstallSource   = $URI | Split-Path -Leaf 
-$InstallExe         = "PowerBiReportBuilder.msi"
-$Arguments          = "/qn /norestart ALLUSERS=1"
-$Modules            = @("Nevergreen")
-#endregion
-
 #region Functions
 # ============================================================================
 # Functions
@@ -87,15 +71,32 @@ function CheckForModules {
     #endregion
 }
 
+# Checking Modules
+CheckForModules
+
 #endregion
+
+#region Variables
+# ============================================================================
+# Variables
+# ============================================================================
+# Set Variables
+#//Release Data
+
+$Application        = "MicrosoftPowerBIReportBuilder"
+$DownloadFolder     = "C:\Apps\Temp\"
+$URI                = (Get-NevergreenApp -Name MicrosoftPowerBIReportBuilder).Uri
+$AppInstallSource   = $URI | Split-Path -Leaf 
+$InstallExe         = "PowerBiReportBuilder.msi"
+$Arguments          = "/qn /norestart ALLUSERS=1"
+$Modules            = @("Nevergreen")
+#endregion
+
 
 #Region Execute
 # ============================================================================
 # Execute
 # ============================================================================
-
-# Checking Modules
-CheckForModules
 
 Write-Host "============================================================"
 Write-Host "===== Downloading $($Application)"
