@@ -1,11 +1,11 @@
 <#
 .SYNOPSIS
-    Downloads and Installs Microsoft PowerBI Report Builder via Nevergreen
+    Downloads and Installs Microsoft PowerBI Desktop via Nevergreen
 .DESCRIPTION
     Uses the Nevergreen module by Dan Gough
     https://github.com/DanGough/Nevergreen
 .EXAMPLE
-	.\P3-App-Nevergeen-PowerBiReportBuilder.ps1
+	.\P3-App-Nevergeen-PowerBI.ps1
 #>
 
 #region Params
@@ -72,6 +72,7 @@ function CheckForModules {
 }
 
 
+
 #endregion
 
 #region Variables
@@ -85,12 +86,12 @@ $Modules            = @("Nevergreen")
 CheckForModules
 
 #//Release Data
-$Application        = "MicrosoftPowerBIReportBuilder"
+$Application        = "MicrosoftPowerBIDesktop"
 $DownloadFolder     = "C:\Apps\Temp\"
-$URI                = (Get-NevergreenApp -Name MicrosoftPowerBIReportBuilder).Uri
+$URI                = (Get-NevergreenApp -Name MicrosoftPowerBiDesktop | Where-Object {$_.Architecture -eq "x64"}).uri
 $AppInstallSource   = $URI | Split-Path -Leaf 
-$InstallExe         = "PowerBiReportBuilder.msi"
-$Arguments          = "/qn /norestart ALLUSERS=1"
+$InstallExe         = "PBIDesktopSetup_x64.exe"
+$Arguments          = "-quiet -norestart ACCEPT_EULA=1"
 
 #endregion
 

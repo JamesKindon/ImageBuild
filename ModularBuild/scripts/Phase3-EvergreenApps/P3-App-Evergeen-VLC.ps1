@@ -71,8 +71,7 @@ function CheckForModules {
     #endregion
 }
 
-# Checking Modules
-CheckForModules
+
 
 #endregion
 
@@ -81,15 +80,18 @@ CheckForModules
 # Variables
 # ============================================================================
 # Set Variables
-#//Release Data
 
+# Checking Modules
+$Modules            = @("Evergreen")
+CheckForModules
+
+#//Release Data
 $Application        = "VideoLanVlcPlayer"
 $DownloadFolder     = "C:\Apps\Temp\"
 $URI                = (Get-EvergreenApp -Name "VideoLanVlcPlayer" | Where-Object {$_.Architecture -eq "x64" -and $_.Type -eq "EXE"}).uri
 $AppInstallSource   = $URI | Split-Path -Leaf 
 $InstallExe         = $AppInstallSource
 $Arguments          = "/S"
-$Modules            = @("Evergreen")
 #endregion
 
 
